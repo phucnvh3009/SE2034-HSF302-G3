@@ -31,13 +31,14 @@ public class AdminManagerController {
         return "admin/managers";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/managers/{id}")
     public String showManagerDetail(@PathVariable("id") Long id, Model model) {
         try {
             ManagerDTO manager = dormManagerService.getManagerById(id);
             model.addAttribute("manager", manager);
 
             return "admin/informationManager";
+
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
 

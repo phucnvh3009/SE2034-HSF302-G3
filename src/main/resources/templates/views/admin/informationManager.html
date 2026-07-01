@@ -42,23 +42,23 @@
                 <div class="detail-grid">
                     <div class="detail-item">
                         <span class="detail-label">Gmail đăng nhập</span>
-                        <span class="detail-value" th:text="${manager.email}">managera@fpt.edu.vn</span>
+                        <span class="detail-value" th:text="${manager.email}"></span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Số điện thoại liên hệ</span>
-                        <span class="detail-value" th:text="${manager.phone}">0912345678</span>
+                        <span class="detail-value" th:text="${manager.phone}">Chưa có thông tin số điẹn thoại</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Giới tính</span>
-                        <span class="detail-value" th:text="${manager.gender == T(vn.edu.fpt.model.constant.GenderType).MALE ? 'Nam' : 'Nữ'}">Nam</span>
+                        <span class="detail-value" th:text="${manager.gender == T(vn.edu.fpt.model.constant.GenderType).MALE ? 'Nam' : 'Nữ'}">Chưa có thông tin</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Ngày sinh</span>
-                        <span class="detail-value" th:text="${#localDates.format(manager.dob, 'dd-MM-yyyy')}">01-01-2000</span>
+                        <span class="detail-label">Ngày-tháng-năm sinh</span>
+                        <span class="detail-value" th:text="${#temporals.format(manager.getDob(), 'dd-MM-yyyy', 'Asia/Ho_Chi_Minh')}">Chưa có thông tin</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Ngày tạo tài khoản</span>
-                        <span class="detail-value" th:text="${#temporals.format(manager.createdAt, 'dd-MM-yyyy HH:mm', 'Asia/Ho_Chi_Minh')}">01-07-2026 08:00</span>
+                        <span class="detail-value" th:text="${#temporals.format(manager.createdAt, 'dd-MM-yyyy HH:mm', 'Asia/Ho_Chi_Minh')}">Chưa có thông tin</span>
                     </div>
                 </div>
             </div>
