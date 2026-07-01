@@ -1,0 +1,29 @@
+<aside xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar" class="main-sidebar">
+    <div class="sidebar-title">
+        <h3>Menu Hệ Thống</h3>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li>
+                <a href="#" class="nav-item">
+                    <span class="text">Quản lý Tòa nhà</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/managers}" class="nav-item active">
+                    <span class="text">Quản lý Managers</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item">
+                    <span class="text">Quản lý Học kỳ</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-item">
+                    <span class="text">Danh sách Duyệt KTX</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>

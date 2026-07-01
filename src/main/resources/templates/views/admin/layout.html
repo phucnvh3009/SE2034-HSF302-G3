@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, pageCss, content)" lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">SDMS - Quản lý KTX</title>
+    <!-- Nhúng CSS dùng chung -->
+    <link rel="stylesheet" th:href="@{/admin/css/common.css}">
+    <link th:if="${pageCss != null}" rel="stylesheet" th:href="@{/admin/css/__${pageCss}__}">
+</head>
+<body>
+<div class="app-container">
+    <div th:replace="~{admin/fragments/header :: header}"></div>
+
+    <div class="app-body">
+        <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
+
+        <main class="main-content">
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+            <div th:replace="${content}"></div>
+        </main>
+    </div>
+
+    <div th:replace="~{admin/fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>
