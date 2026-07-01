@@ -41,4 +41,9 @@ public class DormitoryBuilding extends BaseAuditEntity {
     // Một tòa nhà có nhiều tầng
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Floor> floors = new HashSet<>();
+
+    // Người quản lý tòa nhà (Dom Manager)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    private User manager;
 }

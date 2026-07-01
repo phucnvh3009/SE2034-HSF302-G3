@@ -8,8 +8,6 @@ import vn.edu.fpt.model.constant.RoleName;
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role,Long> {
-
+public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByRoleName(RoleName roleName);
-
 }

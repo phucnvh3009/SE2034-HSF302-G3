@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <body>
+
+        <!-- Sidebar Fragment -->
+        <div th:fragment="sidebar(activeTab)" class="bg-dark text-white shadow"
+             style="width: 250px; min-height: 100vh; display: flex; flex-direction: column;">
+            <!-- Logo / Brand Area -->
+            <div class="p-4 d-flex align-items-center border-bottom border-secondary">
+                <h5 class="mb-0 fw-bold text-uppercase mx-auto" style="letter-spacing: 1px;">QUẢN LÝ KÍ TÚC XÁ</h5>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="p-3 flex-grow-1" style="overflow-y: auto;">
+                <ul class="nav flex-column gap-1">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50 px-3 py-2 rounded" href="/dom-manager/dashboard"
+                           th:classappend="${activeTab == 'dashboard'} ? 'bg-primary text-white' : ''">
+                            <i class="bi bi-speedometer2 me-2"></i>Trang Chủ
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50 px-3 py-2 rounded" href="/dom-manager/occupancy"
+                           th:classappend="${activeTab == 'occupancy'} ? 'bg-primary text-white' : ''">
+                            <i class="bi bi-building me-2"></i>Trạng Thái Cư Trú
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50 px-3 py-2 rounded" href="/dom-manager/staff"
+                           th:classappend="${activeTab == 'staff'} ? 'bg-primary text-white' : ''">
+                            <i class="bi bi-people me-2"></i>Quản Lý Nhân Viên
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50 px-3 py-2 rounded" href="/dom-manager/assignment"
+                           th:classappend="${activeTab == 'assignment'} ? 'bg-primary text-white' : ''">
+                            <i class="bi bi-map me-2"></i>Phân Công Khu Vực
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50 px-3 py-2 rounded" href="/dom-manager/report"
+                           th:classappend="${activeTab == 'report'} ? 'bg-primary text-white' : ''">
+                            <i class="bi bi-bar-chart-line me-2"></i>Báo Cáo
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Footer Area -->
+            <div class="p-3 border-top border-secondary text-center text-secondary small">
+                &copy; 2026 FPT Dom Team
+            </div>
+        </div>
+
+    </body>
+</html>
