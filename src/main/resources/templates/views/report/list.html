@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Báo Cáo Sự Cố - Ký Túc Xá</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f3f4f6; }
+
+        /* Layout Container */
+        .container { display: flex; min-height: 100vh; }
+
+        /* Sidebar Style */
+        .sidebar {
+            width: 260px;
+            background: #1f2937;
+            color: #fff;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        .sidebar-logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 5px;
+            padding-left: 10px;
+        }
+        .user-info {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #374151;
+            font-size: 14px;
+            color: #38bdf8;
+        }
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .sidebar-menu a:hover {
+            background: #374151;
+            color: #fff;
+        }
+        .sidebar-menu a.active {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 { margin: 0; }
+        .subtitle { color: #666; margin-top: 4px; margin-bottom: 20px; }
+
+        /* Nút hành động */
+        .btn-create {
+            background: #3b82f6; color: #fff;
+            padding: 10px 20px; text-decoration: none;
+            border-radius: 6px; font-weight: bold; font-size: 14px;
+            transition: background 0.2s;
+        }
+        .btn-create:hover { background: #2563eb; }
+
+        /* Thông báo */
+        .alert-success {
+            background: #e8f5e9; border: 1px solid #4caf50; color: #2e7d32;
+            padding: 12px 16px; border-radius: 6px; margin-bottom: 16px;
+        }
+
+        /* Grid Báo cáo */
+        .report-list { display: flex; flex-direction: column; gap: 16px; }
+        .report-card {
+            background: #fff; border: 1px solid #e5e7eb;
+            border-radius: 12px; padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .report-header {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; margin-bottom: 10px;
+        }
+        .report-title { font-size: 18px; font-weight: bold; color: #111827; }
+        
+        .status-badge {
+            font-size: 12px; padding: 4px 12px; border-radius: 12px; font-weight: bold;
+        }
+        .status-pending { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+        .status-in_progress { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+        .status-resolved { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .status-rejected { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        .report-meta {
+            font-size: 13px; color: #6b7280; margin-bottom: 12px;
+            display: flex; gap: 16px; flex-wrap: wrap;
+        }
+        .report-desc {
+            font-size: 14px; color: #374151; line-height: 1.5;
+            background: #f9fafb; padding: 12px; border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .staff-note-box {
+            font-size: 13px; color: #b45309; background: #fffbeb;
+            border-left: 4px solid #f59e0b; padding: 10px 14px; border-radius: 4px;
+        }
+
+        .empty-state { text-align: center; color: #999; padding: 60px; background: #fff; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Sidebar di chuyển -->
+    <div class="sidebar">
+        <div class="sidebar-logo">DORM Student</div>
+        <div class="user-info">
+            Xin chào, <strong th:text="${userDisplayName}">Sinh viên</strong>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a th:href="@{/student/dashboard}">📊 Dashboard</a></li>
+            <li><a th:href="@{/notifications}">🔔 Thông báo</a></li>
+            <li><a th:href="@{/student/reports}" class="active">🛠️ Báo cáo sự cố</a></li>
+            <li style="margin-top: auto; padding-top: 20px; border-top: 1px solid #374151;">
+                <a th:href="@{/logout}" style="color: #f87171;"><span class="icon">🚪</span> Đăng xuất</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Vùng nội dung chính -->
+    <div class="content">
+        <div class="header-section">
+            <div>
+                <h1>Báo Cáo Sự Cố</h1>
+                <p class="subtitle" style="margin-bottom: 0;">Quản lý và theo dõi các sự cố phòng ở</p>
+            </div>
+            <a th:href="@{/student/reports/create}" class="btn-create">✍️ Gửi báo cáo mới</a>
+        </div>
+
+        <div th:if="${successMessage}" class="alert-success" th:text="${successMessage}"></div>
+
+        <div class="report-list">
+            <div th:if="${#lists.isEmpty(reports)}" class="empty-state">
+                Bạn chưa gửi báo cáo sự cố nào.
+            </div>
+
+            <div th:each="r : ${reports}" class="report-card">
+                <div class="report-header">
+                    <span class="report-title" th:text="${r.title}"></span>
+                    <span class="status-badge"
+                          th:classappend="'status-' + ${r.status.toLowerCase()}"
+                          th:text="${r.statusName}"></span>
+                </div>
+
+                <div class="report-meta">
+                    <span>🏢 Phòng: <strong th:text="${r.roomName}"></strong></span>
+                    <span>📂 Phân loại: <strong th:text="${r.categoryName}"></strong></span>
+                    <span>📅 Ngày gửi: <span th:text="${r.createdAt}"></span></span>
+                </div>
+
+                <div class="report-desc" th:text="${r.description}"></div>
+
+                <!-- Phản hồi từ quản lý -->
+                <div th:if="${r.staffNote != null && !r.staffNote.isBlank()}" class="staff-note-box">
+                    <strong>Phản hồi từ quản lý:</strong> <span th:text="${r.staffNote}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

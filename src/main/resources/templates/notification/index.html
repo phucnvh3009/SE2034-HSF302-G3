@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông Báo - Ký Túc Xá</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+
+        h1 { margin-bottom: 4px; }
+        .subtitle { color: #666; margin-top: 0 ; margin-bottom: 20px; }
+
+        /* Thanh lọc */
+        .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .filter-bar a {
+            padding: 6px 16px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #333;
+            background: #fff;
+        }
+        .filter-bar a.active { background: #333; color: #fff; border-color: #333; }
+        .badge {
+            display: inline-block;
+            background: red; color: white;
+            border-radius: 50%; padding: 1px 6px;
+            font-size: 11px; margin-left: 4px;
+        }
+
+        /* Danh sách */
+        .notification-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .notification-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-left: 4px solid transparent;
+            border-radius: 8px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        /* Chưa đọc: viền trái xanh */
+        .notification-item.unread { border-left-color: #1976d2; }
+
+        .notification-body { flex: 1; }
+        .notification-title { font-weight: bold; font-size: 15px; margin-bottom: 4px; }
+        .notification-content { color: #555; font-size: 14px; }
+
+        .notification-meta { text-align: right; white-space: nowrap; }
+        .type-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            margin-bottom: 6px;
+        }
+        .type-payment      { border-color: #1976d2; color: #1976d2; }
+        .type-announcement { border-color: #9c27b0; color: #9c27b0; }
+        .type-maintenance  { border-color: #ff9800; color: #ff9800; }
+        .type-system       { border-color: #607d8b; color: #607d8b; }
+
+        .time-ago { font-size: 12px; color: #999; display: block; }
+        .unread-dot { color: #1976d2; font-size: 18px; }
+
+        .empty-state { text-align: center; color: #999; padding: 60px; }
+    </style>
+</head>
+<body>
+
+<h1>Thông Báo</h1>
+<p class="subtitle">Tất cả thông báo của bạn</p>
+
+<!-- Thanh lọc theo loại -->
+<div class="filter-bar">
+    <a th:href="@{/notifications}"
+       th:classappend="${activeType == 'all'} ? ' active' : ''">
+        Tất cả
+        <span class="badge" th:if="${unreadCount > 0}" th:text="${unreadCount}"></span>
+    </a>
+    <a th:href="@{/notifications(type='payment')}"
+       th:classappend="${activeType == 'payment'} ? ' active' : ''">Thanh toán</a>
+    <a th:href="@{/notifications(type='announcement')}"
+       th:classappend="${activeType == 'announcement'} ? ' active' : ''">Thông báo</a>
+    <a th:href="@{/notifications(type='maintenance')}"
+       th:classappend="${activeType == 'maintenance'} ? ' active' : ''">Bảo trì</a>
+    <a th:href="@{/notifications(type='system')}"
+       th:classappend="${activeType == 'system'} ? ' active' : ''">Hệ thống</a>
+</div>
+
+<!-- Danh sách thông báo -->
+<div class="notification-list">
+
+    <div th:if="${#lists.isEmpty(notifications)}" class="empty-state">
+        Không có thông báo nào.
+    </div>
+
+    <div th:each="n : ${notifications}"
+         class="notification-item"
+         th:classappend="${!n.read} ? ' unread' : ''">
+
+        <div class="notification-body">
+            <div class="notification-title" th:text="${n.title}"></div>
+            <div class="notification-content" th:text="${n.content}"></div>
+        </div>
+
+        <div class="notification-meta">
+            <span class="type-badge"
+                  th:classappend="'type-' + ${n.type}"
+                  th:text="${
+                      n.type == 'payment'      ? 'Thanh toán' :
+                      n.type == 'announcement' ? 'Thông báo'  :
+                      n.type == 'maintenance'  ? 'Bảo trì'    :
+                                                 'Hệ thống'
+                  }"></span>
+            <span class="time-ago" th:text="${n.timeAgo}"></span>
+            <span th:if="${!n.read}" class="unread-dot">●</span>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
