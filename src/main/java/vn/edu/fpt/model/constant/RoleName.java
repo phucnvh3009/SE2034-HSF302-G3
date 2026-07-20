@@ -4,5 +4,9 @@ public enum RoleName {
     ROLE_ADMIN,
     ROLE_MANAGER,
     ROLE_STAFF,
-    ROLE_STUDENT
+    ROLE_STUDENT,
+    ADMIN,
+    MANAGER,
+    STAFF,
+    STUDENT
 }

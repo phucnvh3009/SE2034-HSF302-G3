@@ -22,6 +22,11 @@ public class AuthController {
 
     private final UserRepository userRepository;
 
+    @GetMapping("/")
+    public String indexRedirect() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/login")
     public String showLoginForm(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
@@ -77,11 +82,11 @@ public class AuthController {
     private String getRedirectUrlForUser(User user) {
 
         boolean isAdmin = user.getUserRoles().stream()
-                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_ADMIN);
+                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_ADMIN || ur.getRole().getRoleName() == RoleName.ADMIN);
         boolean isManager = user.getUserRoles().stream()
-                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_MANAGER);
+                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_MANAGER || ur.getRole().getRoleName() == RoleName.MANAGER);
         boolean isStudent = user.getUserRoles().stream()
-                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_STUDENT);
+                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_STUDENT || ur.getRole().getRoleName() == RoleName.STUDENT);
 
         if (isAdmin) {
             return "redirect:/admin/managers";

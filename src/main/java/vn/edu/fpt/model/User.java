@@ -68,4 +68,18 @@ public class User extends BaseAuditEntity {
     // Quan hệ 1-1 với Hồ sơ Sinh viên (chỉ khả dụng nếu role là STUDENT)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private StudentProfile studentProfile;
+
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+        if (lastName != null) sb.append(lastName);
+        if (middleName != null && !middleName.isBlank()) {
+            if (sb.length() > 0) sb.append(" ");
+            sb.append(middleName);
+        }
+        if (firstName != null) {
+            if (sb.length() > 0) sb.append(" ");
+            sb.append(firstName);
+        }
+        return sb.toString().trim();
+    }
 }

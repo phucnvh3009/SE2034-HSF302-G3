@@ -1,4 +1,5 @@
 package vn.edu.fpt.service;
 
-public class test {
+// file placeholder - không dùng
+class test {
 }
