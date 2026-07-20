@@ -21,11 +21,11 @@ public class RoomType extends BaseAuditEntity {
     private Long id;
 
     @Column(name = "type_name", nullable = false, unique = true, columnDefinition = "NVARCHAR(100)")
-    private String typeName; // Ví dụ: "Phòng thường 8 giường", "Phòng VIP 4 giường điều hòa"
+    private String typeName;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price; // Giá tiền thuê của loại phòng này
+    private BigDecimal price;
 
     @Column(name = "description", columnDefinition = "NVARCHAR(500)")
-    private String description; // Mô tả tiện ích đi kèm (điều hòa, tủ lạnh...)
+    private String description;
 }
