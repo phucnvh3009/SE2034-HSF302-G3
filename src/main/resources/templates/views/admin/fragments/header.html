@@ -4,7 +4,7 @@
     </div>
     <div class="header-user">
         <span class="user-role">ADMINISTRATOR</span>
-        <span class="user-name">Xin chào, Admin!</span>
-        <a href="#" class="btn-logout">Đăng xuất</a>
+        <span class="user-name" th:text="${session.currentUser != null ? 'Xin chào, ' + session.currentUser.firstName + '!' : 'Xin chào, Admin!'}">Xin chào, Admin!</span>
+        <a th:href="@{/logout}" class="btn-logout">Đăng xuất</a>
     </div>
 </header>

@@ -50,7 +50,7 @@
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Giới tính</span>
-                        <span class="detail-value" th:text="${manager.gender == T(vn.edu.fpt.model.constant.GenderType).MALE ? 'Nam' : 'Nữ'}">Chưa có thông tin</span>
+                        <span class="detail-value" th:text="${manager.gender.name() == 'MALE' ? 'Nam' : 'Nữ'}">Chưa có thông tin</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Ngày-tháng-năm sinh</span>

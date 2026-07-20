@@ -32,8 +32,8 @@
                         <td th:text="${mgr.email}">managera@fpt.edu.vn</td>
                         <td style="text-align: center;" th:text="${#temporals.format(mgr.createdAt, 'dd-MM-yyyy', 'Asia/Ho_Chi_Minh')}">01-07-2026</td>
                         <td style="text-align: center;">
-                            <span th:if="${mgr.isActive}" class="badge badge-success">Active</span>
-                            <span th:unless="${mgr.isActive}" class="badge badge-danger">Locked</span>
+                            <span th:if="${mgr.isActive}" class="badge">Active</span>
+                            <span th:unless="${mgr.isActive}" class="badge">Locked</span>
                         </td>
                         <td style="text-align: center;">
                             <div style="display: flex; gap: 8px; justify-content: center;">
