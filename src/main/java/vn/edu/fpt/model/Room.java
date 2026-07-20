@@ -38,7 +38,7 @@ public class Room extends BaseAuditEntity {
     private Integer maxBeds; // Số giường tối đa (ví dụ: 4 hoặc 8)
 
     @Column(name = "current_occupancy", nullable = false)
-    private Integer currentOccupancy = 0; // Số người thực tế đang ở
+    private Integer currentOccupancy = 0;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
