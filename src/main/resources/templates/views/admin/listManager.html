@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:replace="~{admin/layout :: layout('Quản lý Ban quản lý KTX', 'listManager.css', ~{::content})}">
+<div th:replace="~{views/admin/layout :: layout('Quản lý Ban quản lý KTX', 'listManager.css', ~{::content})}">
     <div th:fragment="content">
 
         <div style="margin-bottom: 20px; text-align: right;">
-            <a th:href="@{/admin/managers/create}" class="btn btn-primary">Thêm Mới Quản Lý</a>
+            <a th:href="@{/admin/listManager/create}" class="btn btn-primary">Thêm Mới Quản Lý</a>
         </div>
 
         <div class="card">
@@ -38,11 +38,10 @@
                         <td style="text-align: center;">
                             <div style="display: flex; gap: 8px; justify-content: center;">
                                 <!-- Nút xem chi tiết -->
-                                <a th:href="@{/admin/managers/{id}(id=${mgr.id})}" class="btn btn-secondary btn-sm">Chi Tiết</a>
+                                <a th:href="@{/admin/listManager/{id}(id=${mgr.id})}" class="btn btn-secondary btn-sm">Chi Tiết</a>
                             </div>
                         </td>
                     </tr>
-                    <!-- Trường hợp danh sách trống -->
                     <tr th:if="${#lists.isEmpty(managers)}">
                         <td colspan="6" style="text-align: center; color: #64748b; padding: 30px;">
                             Chưa có quản lý tòa nhà nào được tạo trong hệ thống.
