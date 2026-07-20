@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:replace="~{admin/layout :: layout('Thêm mới Quản lý KTX', 'addManager.css', ~{::content})}">
+<div th:replace="~{views/admin/layout :: layout('Thêm mới Quản lý KTX', 'addManager.css', ~{::content})}">
     <div th:fragment="content">
 
         <div style="margin-bottom: 20px;">
-            <a th:href="@{/admin/managers}" class="btn btn-secondary">Quay lại danh sách</a>
+            <a th:href="@{/admin/listManager}" class="btn btn-secondary">Quay lại danh sách</a>
         </div>
 
         <div class="card">
             <div class="card-title">Tạo Tài Khoản Dorm Manager</div>
 
-            <form th:action="@{/admin/managers}" th:object="${newManager}" method="post">
+            <form th:action="@{/admin/listManager}" th:object="${newManager}" method="post">
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="lastName">Họ <span class="text-danger">*</span></label>
@@ -67,8 +67,8 @@
                 </div>
 
                 <div style="text-align: right; margin-top: 25px;">
-                    <a th:href="@{/admin/managers}" class="btn btn-secondary" style="margin-right: 10px;">Hủy bỏ</a>
-                    <button type="submit" class="btn btn-primary">➕ Tạo Tài Khoản</button>
+                    <a th:href="@{/admin/listManager}" class="btn btn-secondary" style="margin-right: 10px;">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-primary">Tạo Tài Khoản</button>
                 </div>
             </form>
         </div>

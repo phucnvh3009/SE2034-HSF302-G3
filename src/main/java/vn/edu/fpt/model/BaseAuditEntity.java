@@ -6,6 +6,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.security.SecurityUtil;
+
 import java.time.Instant;
 
 @MappedSuperclass
