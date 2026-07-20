@@ -1,49 +1,88 @@
 package vn.edu.fpt.controller.admin;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.fpt.dto.request.ManagerRequest;
 import vn.edu.fpt.dto.response.ManagerDTO;
-import vn.edu.fpt.service.DormManagerService;
+import vn.edu.fpt.service.DormManagementService;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/listManager")
 @RequiredArgsConstructor
 public class AdminManagerController {
 
-    private final DormManagerService dormManagerService;
+    private final DormManagementService dormManagementService;
 
-    @GetMapping("/managers")
+    @GetMapping
     public String showManagersList(Model model) {
-        List<ManagerDTO> managers = dormManagerService.getAllManagers();
+        List<ManagerDTO> managers = dormManagementService.getAllManagers();
         model.addAttribute("managers", managers);
+        return "admin/listManager";
+    }
 
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
         if (!model.containsAttribute("newManager")) {
             model.addAttribute("newManager", new ManagerRequest());
         }
-
-        return "admin/managers";
+        return "admin/addManager";
     }
 
-    @GetMapping("/managers/{id}")
-    public String showManagerDetail(@PathVariable("id") Long id, Model model) {
+    @PostMapping
+    public String createManager(@Valid @ModelAttribute("newManager") ManagerRequest request,
+                                BindingResult bindingResult,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errorMessage", "Thông tin nhập vào không hợp lệ. Vui lòng kiểm tra lại!");
+            return "admin/addManager";
+        }
+
         try {
-            ManagerDTO manager = dormManagerService.getManagerById(id);
-            model.addAttribute("manager", manager);
-
-            return "admin/informationManager";
-
+            dormManagementService.createManager(request);
+            redirectAttributes.addFlashAttribute("successMessage", "Thêm mới quản lý thành công!");
+            return "redirect:/admin/listManager";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
-
-            return "redirect:/admin/managers";
+            return "admin/addManager";
         }
     }
 
+    @GetMapping("/{id}")
+    public String showManagerDetail(@PathVariable("id") Long id, Model model) {
+        try {
+            ManagerDTO manager = dormManagementService.getManagerById(id);
+            model.addAttribute("manager", manager);
+            return "admin/viewManager";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/listManager";
+        }
+    }
+
+    @PostMapping("/{id}/status")
+    public String toggleManagerStatus(@PathVariable("id") Long id,
+                                      @RequestParam(value = "redirectDetail", defaultValue = "false") boolean redirectDetail,
+                                      RedirectAttributes redirectAttributes) {
+        try {
+            dormManagementService.toggleManagerStatus(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật trạng thái tài khoản thành công!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+
+        if (redirectDetail) {
+
+            return "redirect:/admin/listManager/" + id;
+        }
+
+        return "redirect:/admin/listManager";
+    }
 }

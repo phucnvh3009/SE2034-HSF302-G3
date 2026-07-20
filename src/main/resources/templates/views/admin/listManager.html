@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:replace="~{admin/layout :: layout('Quản lý Ban quản lý KTX', 'managers.css', ~{::content})}">
+<div th:replace="~{admin/layout :: layout('Quản lý Ban quản lý KTX', 'listManager.css', ~{::content})}">
     <div th:fragment="content">
-        <!-- Nút chuyển sang trang thêm mới -->
+
         <div style="margin-bottom: 20px; text-align: right;">
             <a th:href="@{/admin/managers/create}" class="btn btn-primary">Thêm Mới Quản Lý</a>
         </div>
-        <!-- 2. Bảng Danh sách Dorm Managers -->
+
         <div class="card">
             <div class="card-title">Danh sách Quản lý tòa nhà</div>
             <div class="table-container">
@@ -32,22 +32,13 @@
                         <td th:text="${mgr.email}">managera@fpt.edu.vn</td>
                         <td style="text-align: center;" th:text="${#temporals.format(mgr.createdAt, 'dd-MM-yyyy', 'Asia/Ho_Chi_Minh')}">01-07-2026</td>
                         <td style="text-align: center;">
-                            <span th:if="${mgr.isActive}" class="badge">Active</span>
-                            <span th:unless="${mgr.isActive}" class="badge">Locked</span>
+                            <span th:if="${mgr.isActive}" class="badge">Hoạt động</span>
+                            <span th:unless="${mgr.isActive}" class="badge">Đã khóa</span>
                         </td>
                         <td style="text-align: center;">
                             <div style="display: flex; gap: 8px; justify-content: center;">
                                 <!-- Nút xem chi tiết -->
-                                <a th:href="@{/admin/managers/{id}(id=${mgr.id})}" class="btn btn-secondary btn-sm">Detail</a>
-
-                                <!-- Form Lock/Unlock tài khoản -->
-                                <form th:action="@{/admin/managers/{id}/status(id=${mgr.id})}" method="post" style="display: inline;">
-                                    <button type="submit"
-                                            th:class="${mgr.isActive} ? 'btn btn-danger btn-sm' : 'btn btn-success btn-sm'"
-                                            th:text="${mgr.isActive} ? 'Lock' : 'Unlock'">
-                                        Lock
-                                    </button>
-                                </form>
+                                <a th:href="@{/admin/managers/{id}(id=${mgr.id})}" class="btn btn-secondary btn-sm">Chi Tiết</a>
                             </div>
                         </td>
                     </tr>

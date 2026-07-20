@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
+<div th:replace="~{admin/layout :: layout('Thêm mới Quản lý KTX', 'addManager.css', ~{::content})}">
+    <div th:fragment="content">
 
+        <div style="margin-bottom: 20px;">
+            <a th:href="@{/admin/managers}" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Tạo Tài Khoản Dorm Manager</div>
+
+            <form th:action="@{/admin/managers}" th:object="${newManager}" method="post">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="lastName">Họ <span class="text-danger">*</span></label>
+                        <input type="text" id="lastName" th:field="*{lastName}" placeholder="Nhập họ..." required />
+                        <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="middleName">Tên đệm</label>
+                        <input type="text" id="middleName" th:field="*{middleName}" placeholder="Nhập tên đệm..." />
+                        <span class="text-danger" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName">Tên <span class="text-danger">*</span></label>
+                        <input type="text" id="firstName" th:field="*{firstName}" placeholder="Nhập tên..." required />
+                        <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email đăng nhập <span class="text-danger">*</span></label>
+                        <input type="email" id="email" th:field="*{email}" placeholder="example@fpt.edu.vn" required />
+                        <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mật khẩu tạm thời <span class="text-danger">*</span></label>
+                        <input type="password" id="password" th:field="*{password}" placeholder="Nhập mật khẩu..." required />
+                        <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại <span class="text-danger">*</span></label>
+                        <input type="text" id="phone" th:field="*{phone}" placeholder="Nhập số điện thoại..." required />
+                        <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Giới tính <span class="text-danger">*</span></label>
+                        <select id="gender" th:field="*{gender}" required>
+                            <option value="" disabled selected>-- Chọn giới tính --</option>
+                            <option th:value="${T(vn.edu.fpt.model.constant.GenderType).MALE}" th:text="'Nam'"></option>
+                            <option th:value="${T(vn.edu.fpt.model.constant.GenderType).FEMALE}" th:text="'Nữ'"></option>
+                        </select>
+                        <span class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Ngày sinh <span class="text-danger">*</span></label>
+                        <input type="date" id="dob" th:field="*{dob}" required />
+                        <span class="text-danger" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></span>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: 25px;">
+                    <a th:href="@{/admin/managers}" class="btn btn-secondary" style="margin-right: 10px;">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-primary">➕ Tạo Tài Khoản</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>

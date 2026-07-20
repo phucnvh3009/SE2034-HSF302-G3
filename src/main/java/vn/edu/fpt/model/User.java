@@ -40,11 +40,11 @@ public class User extends BaseAuditEntity {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "phone", length = 15, nullable = false)
+    @Column(name = "phone", length = 15)
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", length = 10, nullable = false)
+    @Column(name = "gender", length = 10)
     private GenderType gender;
 
     @Column(name = "dob")
@@ -56,16 +56,13 @@ public class User extends BaseAuditEntity {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
 
-    // Quan hệ 1-1 với Địa chỉ cụ thể
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    // Quan hệ 1-N với bảng trung gian phân vai trò
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    // Quan hệ 1-1 với Hồ sơ Sinh viên (chỉ khả dụng nếu role là STUDENT)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private StudentProfile studentProfile;
 

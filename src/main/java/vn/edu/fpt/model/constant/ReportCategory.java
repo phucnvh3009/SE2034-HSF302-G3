@@ -7,5 +7,6 @@ public enum ReportCategory {
     FACILITY,
     CLEANLINESS,
     SECURITY,
-    OTHER
+    OTHER,
+    
 }

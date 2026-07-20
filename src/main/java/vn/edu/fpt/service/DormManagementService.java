@@ -5,7 +5,7 @@ import vn.edu.fpt.dto.response.ManagerDTO;
 
 import java.util.List;
 
-public interface DormManagerService {
+public interface DormManagementService {
     List<ManagerDTO> getAllManagers();
     ManagerDTO getManagerById(Long id);
     ManagerDTO createManager(ManagerRequest request);
