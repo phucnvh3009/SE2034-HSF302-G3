@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormitory Staff - Ghi nhận Điện/Nước</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/domstaff/css/domstaff.css}">
+</head>
+<body>
+<!-- Sidebar -->
+<th:block th:replace="~{/domstaff/Share/sidebar::sidebar}"></th:block>
+
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Header -->
+    <th:block th:replace="~{/domstaff/Share/header::header}"></th:block>
+
+
+    <!-- Page Content -->
+    <div class="content-wrapper">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0 text-dark"><a href="/domstaff/utility-usage" class="text-secondary text-decoration-none"><i class="bi bi-arrow-left"></i></a> Ghi nhận Điện/Nước tháng mới</h3>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                
+                <!-- Hiển thị lỗi nếu có -->
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span th:text="${errorMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <form th:action="@{/domstaff/utility-usage/create}" th:object="${reqDTO}" method="post">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Kỳ ghi nhận</label>
+                            <input type="month" class="form-control" th:field="*{monthYear}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Phòng</label>
+                            <select class="form-select" th:field="*{roomId}" required>
+                                <option value="" selected disabled>-- Chọn phòng --</option>
+                                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.buildingName + ' - ' + room.roomNumber}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Cột Điện -->
+                        <div class="col-md-6">
+                            <div class="card bg-light border-0 mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning mb-3"><i class="bi bi-lightning-fill"></i> Thông tin Điện</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Chỉ số mới</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" th:field="*{endElectricity}" placeholder="Nhập số trên công tơ..." required>
+                                            <span class="input-group-text">kWh</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cột Nước -->
+                        <div class="col-md-6">
+                            <div class="card bg-light border-0 mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info mb-3"><i class="bi bi-droplet-fill"></i> Thông tin Nước</h5>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Chỉ số mới</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" th:field="*{endWater}" placeholder="Nhập số trên đồng hồ..." required>
+                                            <span class="input-group-text">Khối</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Ghi chú thêm</label>
+                        <textarea class="form-control" th:field="*{note}" rows="2" placeholder="Ví dụ: Công tơ điện bị mờ, đồng hồ nước bị rỉ..."></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/domstaff/utility-usage}" class="btn btn-outline-secondary">Hủy bỏ</a>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Lưu ghi nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

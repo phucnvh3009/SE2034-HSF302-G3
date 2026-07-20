@@ -8,5 +8,8 @@ public enum ReportCategory {
     CLEANLINESS,
     SECURITY,
     OTHER,
+    ELECTRICAL,
+    PLUMBING,
+    FURNITURE
     
 }

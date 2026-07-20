@@ -1,0 +1,31 @@
+<div class="sidebar" th:fragment="sidebar">
+    <div class="sidebar-header">
+        <i class="bi bi-building"></i> DomManagement
+    </div>
+    <div class="mt-3">
+        <p class="text-uppercase text-secondary small px-4 mb-2 fw-bold" style="font-size: 0.75rem;">Menu chính</p>
+        <div class="accordion accordion-flush bg-transparent" id="sidebarAccordion">
+            <div class="accordion-item bg-transparent border-0">
+                <h2 class="accordion-header">
+                    <button onclick="window.location.href='/domstaff/rooms'" class="accordion-button bg-transparent text-light shadow-none py-2 px-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRoom">
+                        <i class="bi bi-door-open me-2"></i> Quản lý Phòng
+                    </button>
+                </h2>
+            </div>
+            <div class="accordion-item bg-transparent border-0">
+                <h2 class="accordion-header">
+                    <button onclick="window.location.href='/domstaff/reports'" class="accordion-button bg-transparent text-light shadow-none py-2 px-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUtility">
+                        <i class="bi bi-file-earmark-text me-2"></i> Đơn từ của Sinh Viên
+                    </button>
+                </h2>
+            </div>
+            <div class="accordion-item bg-transparent border-0">
+                <h2 class="accordion-header">
+                    <button onclick="window.location.href='/domstaff/utility-usage'" class="accordion-button bg-transparent text-light shadow-none py-2 px-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUtility">
+                        <i class="bi bi-lightning-charge me-2"></i> Dịch vụ Điện/Nước
+                    </button>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
