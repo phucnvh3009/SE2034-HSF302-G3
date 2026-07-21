@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="~{dom_manager/layout :: layout('Thêm nhân viên (Add Staff)', ~{::content})}">
+    <div th:fragment="content">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Thêm tài khoản Nhân viên mới</h2>
+            <a th:href="@{/dom_manager/staff_account}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+        </div>
+
+        <div class="card shadow-sm w-75 mx-auto">
+            <div class="card-body p-4">
+                <form th:action="@{/dom_manager/staff_account/add}" th:object="${staffRequest}" method="post">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Họ <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{lastName}" placeholder="Ví dụ: Nguyễn">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Tên đệm</label>
+                            <input type="text" class="form-control" th:field="*{middleName}" placeholder="Ví dụ: Văn">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Tên <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{firstName}" placeholder="Ví dụ: A">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" th:field="*{email}" placeholder="staff@fpt.edu.vn">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Số điện thoại <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{phone}" placeholder="0123456789">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Ngày sinh <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" th:field="*{dob}">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Giới tính <span class="text-danger">*</span></label>
+                            <select class="form-select" th:field="*{gender}">
+                                <option value="" disabled selected>Chọn giới tính</option>
+                                <option value="MALE">Nam</option>
+                                <option value="FEMALE">Nữ</option>
+                                <option value="OTHER">Khác</option>
+                            </select>
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Mật khẩu khởi tạo <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" th:field="*{password}" placeholder="Mật khẩu">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save"></i> Lưu nhân viên</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</body>
+</html>

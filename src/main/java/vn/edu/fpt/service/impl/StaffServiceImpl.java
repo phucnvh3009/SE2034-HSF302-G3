@@ -59,7 +59,7 @@ public class StaffServiceImpl implements StaffService {
         user.setPasswordHash(request.getPassword()); // TODO: Implement password hashing (e.g. BCrypt) later
 
         // 2. Assign Role DORM_STAFF
-        Role role = roleRepository.findByRoleName(RoleName.ROLE_DORM_STAFF)
+        Role role = roleRepository.findByRoleName(RoleName.ROLE_STAFF)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
         UserRole userRole = new UserRole();
         userRole.setUser(user);

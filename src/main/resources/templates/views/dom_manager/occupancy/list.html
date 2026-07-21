@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:replace="~{dom_manager/layout :: layout('Tình trạng phòng (Occupancy)', ~{::content})}">
+            <div th:fragment="content">
+                <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
+                <div th:if="${occupancy != null}" class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2>Tình trạng KTX: <span th:text="${occupancy.buildingName}"></span></h2>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card text-white bg-primary mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Tổng số phòng</h5>
+                                        <h3 class="card-text" th:text="${occupancy.totalRooms}">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-white bg-success mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Giường đã thuê</h5>
+                                        <h3 class="card-text" th:text="${occupancy.occupiedBeds}">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-white bg-info mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Giường trống</h5>
+                                        <h3 class="card-text" th:text="${occupancy.availableBeds}">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-white bg-warning mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Đang bảo trì</h5>
+                                        <h3 class="card-text" th:text="${occupancy.maintenanceBeds}">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:each="floor : ${occupancy.floors}" class="card border mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0 text-primary">
+                                    <i class="bi bi-layers me-2"></i>Tầng <span th:text="${floor.floorNumber}"></span>
+                                    <small class="text-muted fs-6 ms-3">
+                                        (Tổng <span th:text="${floor.totalRooms}"></span> phòng,
+                                        <span class="text-success"
+                                              th:text="${floor.occupiedBeds} + '/' + ${floor.totalBeds}"></span> giường đã
+                                        thuê)
+                                    </small>
+                                </h5>
+                            </div>
+                            <div class="card-body bg-light">
+                                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-3">
+                                    <div class="col" th:each="room : ${floor.rooms}">
+                                        <div class="card h-100 border shadow-sm">
+                                            <div class="card-header py-2 d-flex justify-content-between align-items-center bg-light text-dark border-bottom">
+                                                <strong>Phòng <span th:text="${room.roomName}"></span></strong>
+                                                <span class="badge bg-secondary rounded-pill"
+                                                      th:text="${room.capacity} + ' Giường'"></span>
+                                            </div>
+                                            <div class="card-body py-2 px-3">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="text-muted small">Đã ở:</span>
+                                                    <strong class="text-danger" th:text="${room.occupiedBeds}">0</strong>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="text-muted small">Trống:</span>
+                                                    <strong class="text-success" th:text="${room.availableBeds}">0</strong>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="text-muted small">Trạng thái:</span>
+                                                    <span class="small fw-bold"
+                                                          th:text="${room.status == 'AVAILABLE' ? 'Trống' : (room.status == 'FULL' ? 'Đầy' : 'Bảo trì')}"
+                                                          th:classappend="${room.status == 'AVAILABLE' ? 'text-success' : (room.status == 'FULL' ? 'text-danger' : 'text-secondary')}">
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" th:if="${#lists.isEmpty(floor.rooms)}">
+                                        <p class="text-muted text-center mb-0">Không có dữ liệu phòng.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

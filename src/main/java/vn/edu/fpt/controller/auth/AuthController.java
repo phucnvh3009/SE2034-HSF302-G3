@@ -40,9 +40,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public String loginProcess(@Valid @ModelAttribute("loginRequest") LoginRequest request,
-                               BindingResult bindingResult,
-                               HttpSession session,
-                               Model model) {
+            BindingResult bindingResult,
+            HttpSession session,
+            Model model) {
         if (bindingResult.hasErrors()) {
             return "auth/login";
         }
@@ -86,7 +86,7 @@ public class AuthController {
         if (isAdmin) {
             return "redirect:/admin/managers";
         } else if (isManager) {
-            return "redirect:/manager/dashboard";
+            return "redirect:/dom_manager/occupancy";
         } else if (isStudent) {
             return "redirect:/student/dashboard";
         }

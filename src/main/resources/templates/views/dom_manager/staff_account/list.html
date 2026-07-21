@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="~{dom_manager/layout :: layout('Danh sách nhân viên (Staff)', ~{::content})}">
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Danh sách nhân viên (Dormitory Staff)</h2>
+            <a th:href="@{/dom_manager/staff_account/add}" class="btn btn-primary"><i class="bi bi-person-plus"></i> Thêm nhân viên</a>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <form th:action="@{/dom_manager/staff_account}" method="get" class="row g-3">
+                    <div class="col-md-5">
+                        <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Tìm theo tên, email...">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="status" class="form-select">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="true" th:selected="${status == true}">Active</option>
+                            <option value="false" th:selected="${status == false}">Locked</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-secondary w-100"><i class="bi bi-search"></i> Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="table-dark">
+                        <tr>
+                            <th class="text-center" style="width: 60px;">STT</th>
+                            <th>Họ và Tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th class="text-center">Trạng thái</th>
+                            <th class="text-center" style="width: 200px;">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="staff, iter : ${staffs}">
+                            <td class="text-center align-middle" th:text="${iter.count}">1</td>
+                            <td class="align-middle fw-bold" th:text="${staff.fullName}">Nguyễn Văn A</td>
+                            <td class="align-middle" th:text="${staff.email}">a@email.com</td>
+                            <td class="align-middle" th:text="${staff.phone}">0123456789</td>
+                            <td class="text-center align-middle">
+                                <span th:if="${staff.isActive}" class="badge bg-success">Active</span>
+                                <span th:unless="${staff.isActive}" class="badge bg-danger">Locked</span>
+                            </td>
+                            <td class="text-center align-middle">
+                                <a th:href="@{/dom_manager/staff_account/{id}(id=${staff.id})}" class="btn btn-sm btn-info text-white"><i class="bi bi-eye"></i> Chi tiết</a>
+                                
+                                <form th:action="@{/dom_manager/staff_account/{id}/status(id=${staff.id})}" method="post" class="d-inline">
+                                    <button type="submit" th:class="${staff.isActive} ? 'btn btn-sm btn-danger' : 'btn btn-sm btn-success'" th:title="${staff.isActive} ? 'Khóa tài khoản' : 'Mở khóa'">
+                                        <i th:class="${staff.isActive} ? 'bi bi-lock-fill' : 'bi bi-unlock-fill'"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(staffs)}">
+                            <td colspan="6" class="text-center text-muted py-4">Chưa có dữ liệu nhân viên.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
