@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormitory Staff - Danh sách Yêu cầu</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/domstaff/css/domstaff.css}">
+</head>
+<body>
+<!-- Sidebar -->
+<th:block th:replace="~{views/domstaff/share/sidebar::sidebar}"></th:block>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Header -->
+    <th:block th:replace="~{views/domstaff/share/header::header}"></th:block>
+
+    <!-- Page Content -->
+    <div class="content-wrapper">
+        <h3 class="mb-4 text-dark">Yêu cầu từ Sinh viên</h3>
+
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Mã YC</th>
+                            <th>Sinh viên</th>
+                            <th>Tiêu đề / Loại</th>
+                            <th>Ngày gửi</th>
+                            <th>Trạng thái</th>
+                            <th class="text-center pe-4">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="report : ${reports}">
+                            <td class="ps-4" th:text="${'REQ-' + report.id}">REQ-1002</td>
+                            <td th:text="${report.studentName}">Nguyễn Văn A</td>
+                            <td th:text="${report.reportType}">Xin chuyển phòng</td>
+                            <td th:text="${report.createdAt}">20/07/2026</td>
+                            <td>
+                                <span class="badge border"
+                                      th:classappend="${report.reportStatus == 'PENDING' ? 'bg-warning text-dark' : 
+                                                      (report.reportStatus == 'IN_PROGRESS' ? 'bg-info text-dark' : 
+                                                      (report.reportStatus == 'RESOLVED' ? 'bg-success' : 
+                                                      (report.reportStatus == 'REJECTED' ? 'bg-danger' : 'bg-secondary')))}"
+                                      th:text="${report.reportStatus == 'PENDING' ? 'Đang chờ duyệt' : 
+                                              (report.reportStatus == 'IN_PROGRESS' ? 'Đang xử lý' : 
+                                              (report.reportStatus == 'RESOLVED' ? 'Đã duyệt' : 
+                                              (report.reportStatus == 'REJECTED' ? 'Đã từ chối' : report.reportStatus)))}">
+                                    Đang chờ duyệt
+                                </span>
+                            </td>
+                            <td class="text-center pe-4">
+                                <a th:href="@{/domstaff/requests/detail/{id}(id=${report.id})}" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

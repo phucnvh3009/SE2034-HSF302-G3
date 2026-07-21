@@ -1,215 +1,360 @@
+/* ============================================================
+   ADMIN PANEL - Common Styles
+   Hệ thống Quản lý Ký Túc Xá - Admin Panel
+   Style: Clean modern UI matching Student Dormitory design
+   ============================================================ */
 
-* {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 body {
-    background-color: #f4f6f9;
-    color: #333;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #334155;
+    font-size: 14px;
+    line-height: 1.6;
 }
-/* Layout khung xương */
+
+/* ===================================================================
+   LAYOUT SKELETON
+   =================================================================== */
 .app-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
+
 .app-body {
     display: flex;
     flex: 1;
 }
+
 /* ===================================================================
-   HEADER (Thanh tiêu đề trên)
+   HEADER
    =================================================================== */
 .main-header {
-    background-color: #1e293b;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #fff;
-    padding: 15px 30px;
+    padding: 0 30px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #0f172a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .header-logo h2 {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 600;
+    letter-spacing: 0.3px;
 }
+
 .header-user {
     display: flex;
     align-items: center;
     gap: 15px;
+    font-size: 13.5px;
 }
+
 .user-role {
-    background-color: #3b82f6;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
     font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
+
 .btn-logout {
-    color: #fda4af;
+    color: #fca5a5;
     text-decoration: none;
-    font-size: 14px;
-    margin-left: 10px;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
 }
+
 .btn-logout:hover {
-    text-decoration: underline;
+    background: rgba(252, 165, 165, 0.1);
+    color: #fecaca;
 }
+
 /* ===================================================================
-   SIDEBAR (Menu bên trái)
+   SIDEBAR
    =================================================================== */
 .main-sidebar {
-    width: 250px;
-    background-color: #0f172a;
+    width: 260px;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     color: #cbd5e1;
-    padding: 20px 10px;
+    padding: 24px 12px;
     min-height: calc(100vh - 60px);
 }
+
 .sidebar-title {
     padding: 0 15px 15px 15px;
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     margin-bottom: 15px;
-    font-size: 14px;
-    color: #94a3b8;
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
 }
+
 .sidebar-nav ul {
     list-style: none;
 }
+
 .nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 15px;
-    color: #cbd5e1;
+    padding: 11px 16px;
+    color: #94a3b8;
     text-decoration: none;
-    border-radius: 6px;
-    margin-bottom: 5px;
-    transition: all 0.2s;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: all 0.2s ease;
+    font-size: 13.5px;
+    font-weight: 400;
 }
+
 .nav-item:hover {
-    background-color: #1e293b;
-    color: #fff;
+    background: rgba(96, 165, 250, 0.12);
+    color: #e2e8f0;
 }
+
 .nav-item.active {
-    background-color: #3b82f6;
-    color: #fff;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    color: #ffffff;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
+
 /* ===================================================================
-   NỘI DUNG CHÍNH & THÔNG BÁO
+   MAIN CONTENT
    =================================================================== */
 .main-content {
     flex: 1;
-    padding: 30px;
-    background-color: #f8fafc;
+    padding: 28px;
+    background: #f0f4f8;
 }
+
+/* ===================================================================
+   ALERTS
+   =================================================================== */
 .alert {
-    padding: 12px 20px;
-    border-radius: 6px;
+    padding: 14px 18px;
+    border-radius: 10px;
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 13.5px;
+    font-weight: 500;
+    border: none;
 }
+
 .alert-success {
-    background-color: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
+    background: #dcfce7;
+    color: #166534;
+    border-left: 4px solid #22c55e;
 }
+
 .alert-danger {
-    background-color: #fee2e2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
 }
+
+/* ===================================================================
+   CARDS
+   =================================================================== */
 .card {
-    background-color: #fff;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 12px;
     border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    padding: 25px;
-    margin-bottom: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s;
 }
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
 .card-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
-    color: #1e293b;
+    color: #0f172a;
     margin-bottom: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     border-bottom: 2px solid #f1f5f9;
 }
+
 /* ===================================================================
-   NÚT BẤM (BUTTONS) DÙNG CHUNG
+   TABLES
+   =================================================================== */
+.table-container {
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.custom-table th {
+    background: #f8fafc;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.custom-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.custom-table tbody tr {
+    transition: background-color 0.15s;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.custom-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===================================================================
+   BUTTONS
    =================================================================== */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 14px;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 13.5px;
     cursor: pointer;
     border: none;
     text-decoration: none;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    gap: 6px;
+    letter-spacing: 0.1px;
 }
+
+.btn:active {
+    transform: scale(0.98);
+}
+
 .btn-primary {
-    background-color: #3b82f6;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
     color: #fff;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
 }
+
 .btn-primary:hover {
-    background-color: #2563eb;
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
+
 .btn-secondary {
-    background-color: #e2e8f0;
+    background: #f1f5f9;
     color: #475569;
+    border: 1px solid #e2e8f0;
 }
+
 .btn-secondary:hover {
-    background-color: #cbd5e1;
+    background: #e2e8f0;
+    border-color: #cbd5e1;
 }
+
 .btn-danger {
-    background-color: #ef4444;
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
     color: #fff;
 }
+
 .btn-danger:hover {
-    background-color: #dc2626;
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
 }
+
 .btn-success {
-    background-color: #10b981;
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
     color: #fff;
 }
+
 .btn-success:hover {
-    background-color: #059669;
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
 }
+
 .btn-sm {
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 12.5px;
+    border-radius: 6px;
 }
+
 /* ===================================================================
-   TRẠNG THÁI (BADGES) DÙNG CHUNG
+   BADGES
    =================================================================== */
 .badge {
     display: inline-block;
-    padding: 3px 8px;
-    border-radius: 9999px;
+    padding: 4px 12px;
+    border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
-    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
+
 .badge-success {
-    background-color: #dcfce7;
+    background: #dcfce7;
     color: #166534;
 }
+
 .badge-danger {
-    background-color: #fee2e2;
+    background: #fef2f2;
     color: #991b1b;
 }
+
 /* ===================================================================
-   FOOTER (Chân trang)
+   FOOTER
    =================================================================== */
 .main-footer {
-    background-color: #1e293b;
-    color: #94a3b8;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #64748b;
     text-align: center;
-    padding: 15px;
-    font-size: 13px;
-    border-top: 1px solid #0f172a;
+    padding: 16px;
+    font-size: 12.5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+@media (max-width: 768px) {
+    .main-sidebar {
+        width: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .main-content {
+        padding: 16px;
+    }
 }
