@@ -18,4 +18,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u JOIN u.userRoles ur JOIN ur.role r WHERE r.roleName = :roleName")
     List<User> findAllByRoleName(@Param("roleName") RoleName roleName);
+
+    @Query("SELECT u FROM User u JOIN u.userRoles ur JOIN ur.role r " +
+            "WHERE r.roleName = :roleName " +
+            "AND (:keyword IS NULL OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "     OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "     OR LOWER(u.middleName) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "     OR LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+            "AND (:status IS NULL OR u.isActive = :status)")
+    List<User> searchManagers(@Param("roleName") RoleName roleName,
+                              @Param("keyword") String keyword,
+                              @Param("status") Boolean status);
+
 }

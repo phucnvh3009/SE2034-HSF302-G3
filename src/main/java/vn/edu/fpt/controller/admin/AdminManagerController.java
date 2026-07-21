@@ -21,9 +21,16 @@ public class AdminManagerController {
     private final DormManagementService dormManagementService;
 
     @GetMapping
-    public String showManagersList(Model model) {
-        List<ManagerDTO> managers = dormManagementService.getAllManagers();
+    public String showManagersList(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "status", required = false) Boolean status,
+            Model model) {
+
+        List<ManagerDTO> managers = dormManagementService.searchManagers(keyword, status);
         model.addAttribute("managers", managers);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", status);
+
         return "views/admin/listManager";
     }
 

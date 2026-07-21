@@ -10,4 +10,5 @@ public interface DormManagementService {
     ManagerDTO getManagerById(Long id);
     ManagerDTO createManager(ManagerRequest request);
     void toggleManagerStatus(Long id);
+    List<ManagerDTO> searchManagers(String keyword, Boolean status);
 }

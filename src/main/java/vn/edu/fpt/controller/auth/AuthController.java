@@ -24,6 +24,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String showLoginForm(Model model, HttpSession session) {
+
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             String redirectUrl = getRedirectUrlForUser(currentUser);
