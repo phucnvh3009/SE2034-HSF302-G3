@@ -31,12 +31,17 @@ public class NotificationUserController {
 
     @PostMapping("/notifications/create")
     public String createNotification(
-            @ModelAttribute Notification4StaffDto notificationDTO,
+            @jakarta.validation.Valid @ModelAttribute("notificationDTO") Notification4StaffDto notificationDTO,
+            org.springframework.validation.BindingResult bindingResult,
             HttpSession session,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Model model) {
         User currentStaff = (User) session.getAttribute("currentUser");
         if (currentStaff == null) {
             return "redirect:/login";
+        }
+        if (bindingResult.hasErrors()) {
+            return "views/domstaff/notification/NotificationCreate";
         }
         try {
             // Quăng cả cái DTO (đã chứa đủ dữ liệu) xuống cho Service

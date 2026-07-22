@@ -41,6 +41,7 @@
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Kỳ ghi nhận</label>
                             <input type="month" class="form-control" th:field="*{monthYear}" required>
+                            <span th:if="${#fields.hasErrors('monthYear')}" th:errors="*{monthYear}" class="text-danger small mt-1 d-block"></span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Phòng</label>
@@ -48,6 +49,7 @@
                                 <option value="" selected disabled>-- Chọn phòng --</option>
                                 <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.buildingName + ' - ' + room.roomNumber}"></option>
                             </select>
+                            <span th:if="${#fields.hasErrors('roomId')}" th:errors="*{roomId}" class="text-danger small mt-1 d-block"></span>
                         </div>
                     </div>
 
@@ -63,6 +65,7 @@
                                             <input type="number" class="form-control" th:field="*{endElectricity}" placeholder="Nhập số trên công tơ..." required>
                                             <span class="input-group-text">kWh</span>
                                         </div>
+                                        <span th:if="${#fields.hasErrors('endElectricity')}" th:errors="*{endElectricity}" class="text-danger small mt-1 d-block"></span>
                                     </div>
 
                                 </div>
@@ -81,6 +84,7 @@
                                             <input type="number" class="form-control" th:field="*{endWater}" placeholder="Nhập số trên đồng hồ..." required>
                                             <span class="input-group-text">Khối</span>
                                         </div>
+                                        <span th:if="${#fields.hasErrors('endWater')}" th:errors="*{endWater}" class="text-danger small mt-1 d-block"></span>
                                     </div>
                                 </div>
                             </div>

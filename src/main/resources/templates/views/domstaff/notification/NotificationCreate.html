@@ -42,6 +42,7 @@
                         <label class="form-label fw-bold">Tiêu đề thông báo <span class="text-danger">*</span></label>
                         <!-- Thay name bằng th:field="*{title}" -->
                         <input type="text" class="form-control" th:field="*{title}" required placeholder="Nhập tiêu đề...">
+                        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger small"></span>
                     </div>
 
                     <!-- Danh mục và Đối tượng -->
@@ -55,6 +56,7 @@
                                 <option value="MAINTENANCE">Bảo trì (Maintenance)</option>
                                 <option value="DISCIPLINE">Kỷ luật (Discipline)</option>
                             </select>
+                            <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger small"></span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Gửi đến (Đối tượng) <span class="text-danger">*</span></label>
@@ -63,6 +65,7 @@
                                 <option value="BUILDING">Theo Tòa nhà</option>
                                 <option value="STUDENT">Sinh viên cụ thể</option>
                             </select>
+                            <span th:if="${#fields.hasErrors('targetType')}" th:errors="*{targetType}" class="text-danger small"></span>
                         </div>
                     </div>
 
@@ -83,6 +86,7 @@
                         <label class="form-label fw-bold">Nội dung <span class="text-danger">*</span></label>
                         <!-- Thay name bằng th:field="*{content}" -->
                         <textarea class="form-control" th:field="*{content}" rows="6" required placeholder="Nhập nội dung chi tiết của thông báo..."></textarea>
+                        <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger small"></span>
                     </div>
 
                     <!-- Nút gửi -->
@@ -109,18 +113,12 @@
         studentGroup.style.display = 'none';
         studentInput.removeAttribute('required');
 
-        if (targetType === 'BUILDING') {
-            studentGroup.style.display = 'none';
-        } else if (targetType === 'STUDENT') {
+       if (targetType === 'STUDENT') {
             studentGroup.style.display = 'block';
             studentInput.setAttribute('required', 'required');
         }
     }
-    
-    // Gọi hàm toggle 1 lần lúc trang vừa load xong để hiển thị đúng state nếu người dùng nhập sai bị dội lại
-    document.addEventListener("DOMContentLoaded", function() {
-        toggleTargetDetails();
-    });
+
 </script>
 
 <!-- Bootstrap JS Bundle -->

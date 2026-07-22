@@ -45,11 +45,16 @@ public class UtilityUsageController {
     }
 
     @PostMapping("/create")
-    public String submitCreateForm(@ModelAttribute("reqDTO") UtilityUsageCreateReqDTO reqDTO, 
-                                   RedirectAttributes redirectAttributes,HttpSession session) {
+    public String submitCreateForm(@jakarta.validation.Valid @ModelAttribute("reqDTO") UtilityUsageCreateReqDTO reqDTO, 
+                                   org.springframework.validation.BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes, HttpSession session, Model model) {
         User currentStaff = (User) session.getAttribute("currentUser");
         if (currentStaff == null) {
             return "redirect:/login";
+        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("rooms", roomService.getAllRoomsByBuildingId(currentStaff.getBuilding().getId()));
+            return "views/domstaff/UtilityUsageCreate";
         }
         try {
             utilityUsageService.createUtilityUsage(reqDTO,currentStaff);
