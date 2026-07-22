@@ -29,10 +29,10 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
     private ContractRepository contractRepository;
     @Override
-    public Page<RoomListDTO> getAllRooms(String keyword, RoomStatus status, int pageNo, int pageSize) {
+    public Page<RoomListDTO> getAllRooms(String keyword, RoomStatus status, int pageNo, int pageSize,Long BuildingId) {
         List<RoomListDTO> roomListDTOs = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Room> roomPage = roomRepository.searchAndFilterRooms(keyword, status, pageable);
+        Page<Room> roomPage = roomRepository.searchAndFilterRooms(keyword, status, BuildingId, pageable);
         for (Room room : roomPage.getContent()) {
             roomListDTOs.add(new RoomListDTO(
                     room.getId(),
@@ -49,9 +49,9 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomListDTO> getAllRooms() {
+    public List<RoomListDTO> getAllRoomsByBuildingId(Long buildingId) {
         List<RoomListDTO> roomListDTOs = new ArrayList<>();
-        List<Room> rooms = roomRepository.findAll();
+        List<Room> rooms = roomRepository.findByFloorBuildingId(buildingId);
         for (Room room : rooms) {
             roomListDTOs.add(new RoomListDTO(
                     room.getId(),

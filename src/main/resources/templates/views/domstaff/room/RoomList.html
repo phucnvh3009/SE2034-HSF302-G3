@@ -32,7 +32,7 @@
             <input type="text" name="keyword" th:value="${keyword}" class="form-control w-25" placeholder="Nhập mã phòng...">
             <select name="status" class="form-select w-25">
                 <option value="">-- Tất cả trạng thái --</option>
-                <option value="AVAILABLE" th:selected="${selectedStatus != null and selectedStatus.name() == 'AVAILABLE'}">Còn trống</option>
+                <option value="ACTIVE" th:selected="${selectedStatus != null and selectedStatus.name() == 'ACTIVE'}">Còn trống</option>
                 <option value="FULL" th:selected="${selectedStatus != null and selectedStatus.name() == 'FULL'}">Đã đầy</option>
                 <option value="MAINTENANCE" th:selected="${selectedStatus != null and selectedStatus.name() == 'MAINTENANCE'}">Bảo trì</option>
             </select>
@@ -46,7 +46,7 @@
                         <thead>
                             <tr>
                                 <th class="ps-4">Tòa Nhà</th>
-                                <th class="ps-4">Tấng</th>
+                                <th class="ps-4">Tầng</th>
                                 <th>Số Phòng</th>
                                 <th>Loại Phòng</th>
                                 <th>Sức chứa</th>
@@ -73,7 +73,7 @@
                                 </td>
                                 
                                 <td>
-                                    <span th:if="${room.status == 'AVAILABLE'}" class="badge bg-success bg-opacity-10 text-success status-badge border border-success border-opacity-25">
+                                    <span th:if="${room.status == 'ACTIVE'}" class="badge bg-success bg-opacity-10 text-success status-badge border border-success border-opacity-25">
                                         Còn trống
                                     </span>
                                     <span th:if="${room.status == 'FULL' }" class="badge bg-danger bg-opacity-10 text-danger status-badge border border-danger border-opacity-25">

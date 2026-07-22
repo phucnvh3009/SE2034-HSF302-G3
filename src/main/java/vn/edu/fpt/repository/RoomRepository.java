@@ -16,10 +16,16 @@ import vn.edu.fpt.model.constant.RoomStatus;
 import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    @Query("SELECT r FROM Room r WHERE r.roomNumber LIKE %:keyword% " +
-            "AND (:status IS NULL OR r.status = :status)")
+    @Query("SELECT r FROM Room r WHERE r.floor.building.id = :buildingId")
+    List<Room> findByFloorBuildingId(@Param("buildingId") Long buildingId);
+
+
+
+
+    @Query("SELECT r FROM Room r WHERE r.roomNumber LIKE %:keyword% AND (:status IS NULL OR r.status = :status) AND r.floor.building.id = :buildingId")
     Page<Room> searchAndFilterRooms(@Param("keyword") String keyword,
                                     @Param("status") RoomStatus status,
+                                    @Param("buildingId") Long buildingId,
                                     Pageable pageable);
 
 
