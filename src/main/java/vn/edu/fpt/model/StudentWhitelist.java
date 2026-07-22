@@ -47,5 +47,5 @@ public class StudentWhitelist extends BaseAuditEntity {
     private Semester semester;
 
     @Column(name = "is_registered", nullable = false)
-    private Boolean isRegistered = false; // Đã đăng ký tài khoản chưa
+    private Boolean isRegistered = false;
 }
