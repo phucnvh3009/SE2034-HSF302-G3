@@ -24,6 +24,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String showLoginForm(Model model, HttpSession session) {
+
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser != null) {
             String redirectUrl = getRedirectUrlForUser(currentUser);
@@ -80,6 +81,8 @@ public class AuthController {
                 .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_ADMIN);
         boolean isManager = user.getUserRoles().stream()
                 .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_MANAGER);
+        boolean isStaff = user.getUserRoles().stream()
+                .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_STAFF);
         boolean isStudent = user.getUserRoles().stream()
                 .anyMatch(ur -> ur.getRole().getRoleName() == RoleName.ROLE_STUDENT);
 
@@ -87,6 +90,8 @@ public class AuthController {
             return "redirect:/admin/listManager";
         } else if (isManager) {
             return "redirect:/dom_manager/occupancy";
+        } else if (isStaff) {
+            return "redirect:/domstaff/reports";
         } else if (isStudent) {
             return "redirect:/student/dashboard";
         }

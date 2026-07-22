@@ -24,26 +24,25 @@
 
         <div class="card mx-auto" style="max-width: 800px;">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <h6 class="mb-0 fw-bold" th:text="'Yêu cầu #REQ-' + ${report.id}">Yêu cầu #REQ-1002</h6>
-                <span class="badge bg-warning text-dark border">Đang chờ duyệt</span>
+                <h6 class="mb-0 fw-bold" th:text="'Yêu cầu #REQ-' + ${report.id}"></h6>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="info-label">Người gửi</div>
-                        <div class="info-value" th:text="${report.studentName + ' (' + report.studentCode + ')'}">Nguyễn Văn A (SE150123)</div>
+                        <div class="info-value" th:text="${report.studentName + ' (' + report.studentCode + ')'}"></div>
                     </div>
                     <div class="col-sm-6">
                         <div class="info-label">Ngày gửi</div>
-                        <div class="info-value" th:text="${report.createdAt}">20/07/2026 14:30</div>
+                        <div class="info-value" th:text="${report.createdAt}"></div>
                     </div>
                 </div>
                 <div class="info-label mt-2">Loại yêu cầu</div>
-                <div class="info-value">Xin chuyển phòng</div>
-                
+                <div class="info-value" th:text="${report.reportType}"></div>
+
                 <div class="info-label mt-2">Nội dung chi tiết</div>
                 <div class="p-3 bg-light border rounded-1 mb-4" style="min-height: 100px;">
-                    Em có xích mích nhỏ với bạn cùng phòng nên xin phép ban quản lý cho em chuyển sang tòa B phòng trống ạ. Em cảm ơn.
+                    <p th:text="${report.description}"></p>
                 </div>
 
                 <hr>

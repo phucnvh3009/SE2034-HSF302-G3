@@ -1,11 +1,10 @@
-package vn.edu.fpt.controller;
+package vn.edu.fpt.controller.student;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import vn.edu.fpt.dto.NotificationDTO;
 import vn.edu.fpt.model.User;
 import vn.edu.fpt.service.NotificationService;
@@ -34,6 +33,6 @@ public class NotificationController {
         model.addAttribute("unreadCount", notificationService.countUnread());
         model.addAttribute("userDisplayName", currentUser.getFullName());
 
-        return "notification/index";
+        return "views/notification/index";
     }
 }

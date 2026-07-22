@@ -73,10 +73,22 @@ public class DormManagementServiceImpl implements DormManagementService {
 
     @Override
     public void toggleManagerStatus(Long id) {
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy quản lý với ID: " + id));
         user.setIsActive(!user.getIsActive());
+
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ManagerDTO> searchManagers(String keyword, Boolean status) {
+
+        String stringKeyword = (keyword != null && !keyword.trim().isEmpty()) ? keyword.trim() : null;
+        List<User> managers = userRepository.searchManagers(RoleName.ROLE_MANAGER, stringKeyword, status);
+
+        return managers.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
     private ManagerDTO mapToResponse(User user) {

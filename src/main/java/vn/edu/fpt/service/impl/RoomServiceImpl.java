@@ -49,6 +49,25 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public List<RoomListDTO> getAllRooms() {
+        List<RoomListDTO> roomListDTOs = new ArrayList<>();
+        List<Room> rooms = roomRepository.findAll();
+        for (Room room : rooms) {
+            roomListDTOs.add(new RoomListDTO(
+                    room.getId(),
+                    room.getFloor().getBuilding().getName(),
+                    "Tầng " + room.getFloor().getFloorNumber().toString(),
+                    room.getRoomNumber(),
+                    room.getRoomType().getTypeName(),
+                    room.getCurrentOccupancy(),
+                    room.getMaxBeds(),
+                    room.getStatus().name()
+            ));
+        }
+        return roomListDTOs;
+    }
+
+    @Override
     public RoomDetailDTO getRoomDetailById(Long id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Không tìm thấy phòng"));
         

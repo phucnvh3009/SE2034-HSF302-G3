@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 @Service
 @Transactional
@@ -37,7 +38,7 @@ public class IssueReportServiceImpl implements IssueReportService {
     @Override
     public List<ReportDTO> getAllIssueReports() {
         List<ReportDTO> reportDTOList = new ArrayList<>();
-        List<IssueReport> issueReports = issueReportRepository.findAll();
+        List<IssueReport> issueReports = issueReportRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
                 .withZone(java.time.ZoneId.systemDefault());
 

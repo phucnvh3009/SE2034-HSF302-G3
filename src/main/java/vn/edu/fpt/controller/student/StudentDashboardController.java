@@ -1,4 +1,4 @@
-package vn.edu.fpt.controller;
+package vn.edu.fpt.controller.student;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,6 @@ public class StudentDashboardController {
         model.addAttribute("email", currentUser.getEmail());
         model.addAttribute("phone", currentUser.getPhone());
 
-        return "student/dashboard/index";
+        return "views/student/dashboard/index";
     }
 }

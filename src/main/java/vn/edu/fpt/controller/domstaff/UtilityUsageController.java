@@ -28,7 +28,7 @@ public class UtilityUsageController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-//        model.addAttribute("rooms", roomService.getAllRooms());
+        model.addAttribute("rooms", roomService.getAllRooms());
         model.addAttribute("reqDTO", new UtilityUsageCreateReqDTO());
         return "views/domstaff/UtilityUsageCreate";
     }

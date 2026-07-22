@@ -2,7 +2,7 @@ package vn.edu.fpt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import vn.edu.fpt.model.DormitoryBuilding;
+import vn.edu.fpt.model.StudentProfile;
 
 @Repository
-public interface DormitoryBuildingRepository extends JpaRepository<DormitoryBuilding, Long> {}
+public interface StudentProfileRepository extends JpaRepository<StudentProfile, Long> {}

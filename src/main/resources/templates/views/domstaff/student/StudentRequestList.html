@@ -37,10 +37,10 @@
                     </thead>
                     <tbody>
                         <tr th:each="report : ${reports}">
-                            <td class="ps-4" th:text="${'REQ-' + report.id}">REQ-1002</td>
-                            <td th:text="${report.studentName}">Nguyễn Văn A</td>
-                            <td th:text="${report.reportType}">Xin chuyển phòng</td>
-                            <td th:text="${report.createdAt}">20/07/2026</td>
+                            <td class="ps-4" th:text="${'REQ-' + report.id}"></td>
+                            <td th:text="${report.studentName}"></td>
+                            <td th:text="${report.reportType}"></td>
+                            <td th:text="${report.createdAt}"></td>
                             <td>
                                 <span class="badge border"
                                       th:classappend="${report.reportStatus == 'PENDING' ? 'bg-warning text-dark' : 

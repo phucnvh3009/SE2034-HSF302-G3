@@ -24,21 +24,19 @@ public class DormitoryBuilding extends BaseAuditEntity {
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true, columnDefinition = "NVARCHAR(100)")
-    private String name; // Ví dụ: "Tòa A", "Tòa B"
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender_type", length = 20, nullable = false)
-    private GenderType genderType; // MALE, FEMALE, MIXED
+    private GenderType genderType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
-    private CommonStatus status; // ACTIVE, INACTIVE
+    private CommonStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_id")
-    private User manager;
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private Set<User> staffAndManagers = new HashSet<>();
 
-    // Một tòa nhà có nhiều tầng
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Floor> floors = new HashSet<>();
 }

@@ -10,11 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationDTO {
-
     private Long id;
-    private String title;       // Tiêu đề thông báo
-    private String content;     // Nội dung ngắn
-    private String type;        // payment | announcement | maintenance | system
-    private String timeAgo;     // "2 giờ trước", "Hôm qua"...
-    private boolean read;       // Đã đọc hay chưa
+    private String title;
+    private String content;
+    private String type;
+    private String timeAgo;
+    private boolean read;
 }

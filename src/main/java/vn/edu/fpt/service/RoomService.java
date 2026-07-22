@@ -11,5 +11,6 @@ import vn.edu.fpt.model.constant.RoomStatus;
 @Service
 public interface RoomService {
     Page<RoomListDTO> getAllRooms(String keyword, RoomStatus status, int pageNo, int pageSize);
+    List<RoomListDTO> getAllRooms();
     RoomDetailDTO getRoomDetailById(Long id);
 }

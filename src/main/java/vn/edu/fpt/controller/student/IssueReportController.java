@@ -1,4 +1,4 @@
-package vn.edu.fpt.controller;
+package vn.edu.fpt.controller.student;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +33,10 @@ public class IssueReportController {
         model.addAttribute("reports", reports);
         model.addAttribute("userDisplayName", currentUser.getFullName());
 
-        return "report/list";
+        return "views/report/list";
     }
 
-    /**
-     * GET /student/reports/create -> Hiển thị form tạo báo cáo sự cố
-     */
+   // form tạo báo cáo sự cố
     @GetMapping("/create")
     public String showCreateForm(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
@@ -47,12 +45,10 @@ public class IssueReportController {
         }
 
         model.addAttribute("userDisplayName", currentUser.getFullName());
-        return "report/create";
+        return "views/report/create";
     }
 
-    /**
-     * POST /student/reports/create -> Xử lý gửi báo cáo sự cố
-     */
+    //Xử lý gửi báo cáo
     @PostMapping("/create")
     public String submitReport(@RequestParam String title,
                                @RequestParam String description,

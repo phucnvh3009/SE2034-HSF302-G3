@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dormitory Staff - Gửi Thông báo</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/domstaff/css/domstaff.css}">
+</head>
+<body>
+<!-- Sidebar -->
+<th:block th:replace="~{views/domstaff/share/sidebar::sidebar}"></th:block>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Header -->
+    <th:block th:replace="~{views/domstaff/share/header::header}"></th:block>
+
+    <!-- Page Content -->
+    <div class="content-wrapper">
+        <h3 class="mb-4 text-dark">
+            <a th:href="@{/domstaff/notifications}" class="text-secondary text-decoration-none">
+                <i class="bi bi-arrow-left"></i>
+            </a> Gửi Thông báo mới
+        </h3>
+
+        <div class="card mx-auto" style="max-width: 800px;">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold">Soạn thông báo</h6>
+            </div>
+            <div class="card-body">
+                <!-- Thêm thông báo lỗi hoặc thành công nếu có -->
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+                <!-- Thêm th:object="${notificationDTO}" để binding DTO -->
+                <form th:action="@{/domstaff/notifications/create}" method="POST" th:object="${notificationDTO}">
+                    <!-- Tiêu đề -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tiêu đề thông báo <span class="text-danger">*</span></label>
+                        <!-- Thay name bằng th:field="*{title}" -->
+                        <input type="text" class="form-control" th:field="*{title}" required placeholder="Nhập tiêu đề...">
+                    </div>
+
+                    <!-- Danh mục và Đối tượng -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Danh mục <span class="text-danger">*</span></label>
+                            <!-- Thay name bằng th:field="*{category}" -->
+                            <select class="form-select" th:field="*{category}" required>
+                                <option value="GENERAL">Chung (General)</option>
+                                <option value="BILLING">Hóa đơn (Billing)</option>
+                                <option value="MAINTENANCE">Bảo trì (Maintenance)</option>
+                                <option value="DISCIPLINE">Kỷ luật (Discipline)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Gửi đến (Đối tượng) <span class="text-danger">*</span></label>
+                            <!-- Thay name bằng th:field="*{targetType}" -->
+                            <select class="form-select" th:field="*{targetType}" required onchange="toggleTargetDetails()">
+                                <option value="BUILDING">Theo Tòa nhà</option>
+                                <option value="STUDENT">Sinh viên cụ thể</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Chọn Tòa nhà (Mặc định ẩn) -->
+                    <div class="mb-3" id="buildingSelectGroup" style="display: none;">
+                        <input type="hidden" id="targetBuildingId" th:field="*{targetBuildingId}">
+                    </div>
+
+                    <!-- Nhập Mã Sinh Viên (Mặc định ẩn) -->
+                    <div class="mb-3" id="studentCodeGroup" style="display: none;">
+                        <label class="form-label fw-bold">Mã số sinh viên (MSSV) <span class="text-danger">*</span></label>
+                        <!-- Thay name bằng th:field="*{studentCode}" -->
+                        <input type="text" class="form-control" th:field="*{studentCode}" placeholder="Ví dụ: SE150001">
+                    </div>
+
+                    <!-- Nội dung -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Nội dung <span class="text-danger">*</span></label>
+                        <!-- Thay name bằng th:field="*{content}" -->
+                        <textarea class="form-control" th:field="*{content}" rows="6" required placeholder="Nhập nội dung chi tiết của thông báo..."></textarea>
+                    </div>
+
+                    <!-- Nút gửi -->
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/domstaff/notifications}" class="btn btn-outline-secondary">Hủy bỏ</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send me-1"></i> Gửi thông báo
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript để ẩn hiện form nhập chi tiết đối tượng -->
+<script>
+    function toggleTargetDetails() {
+        const targetType = document.getElementById('targetType').value;
+        const studentGroup = document.getElementById('studentCodeGroup');
+        const studentInput = document.getElementById('studentCode');
+
+        // Reset trạng thái hiển thị và required
+        studentGroup.style.display = 'none';
+        studentInput.removeAttribute('required');
+
+        if (targetType === 'BUILDING') {
+            studentGroup.style.display = 'none';
+        } else if (targetType === 'STUDENT') {
+            studentGroup.style.display = 'block';
+            studentInput.setAttribute('required', 'required');
+        }
+    }
+    
+    // Gọi hàm toggle 1 lần lúc trang vừa load xong để hiển thị đúng state nếu người dùng nhập sai bị dội lại
+    document.addEventListener("DOMContentLoaded", function() {
+        toggleTargetDetails();
+    });
+</script>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
