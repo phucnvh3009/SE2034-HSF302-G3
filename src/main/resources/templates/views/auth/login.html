@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <label for="email">Gmail Đăng Nhập</label>
-                <input type="email" id="email" th:field="*{email}" placeholder="example@fpt.edu.vn" required autofocus/>
+                <input type="email" id="email" th:field="*{email}" placeholder="example@fpt.edu.vn" required/>
                 <span class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
             </div>
 

@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.fpt.dto.request.LoginRequest;
 import vn.edu.fpt.model.User;
 import vn.edu.fpt.model.constant.RoleName;
-import vn.edu.fpt.repository.UserRepository;
-
-import java.util.Optional;
+import vn.edu.fpt.service.AuthService;
 
 @Controller
 @RequiredArgsConstructor
-@Transactional
 public class AuthController {
 
-    private final UserRepository userRepository;
+    private final AuthService authService;
 
     @GetMapping("/login")
     public String showLoginForm(Model model, HttpSession session) {
@@ -47,33 +44,22 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "views/auth/login";
         }
+        try {
+            User user = authService.authenticate(request);
+            session.setAttribute("currentUser", user);
 
-        Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
-        if (userOpt.isEmpty()) {
-            model.addAttribute("errorMessage", "Email đăng nhập không tồn tại!");
-            return "views/auth/login";
-        }
-
-        User user = userOpt.get();
-
-        if (!user.getPasswordHash().equals(request.getPassword())) {
-            model.addAttribute("errorMessage", "Mật khẩu không chính xác!");
+            return getRedirectUrlForUser(user);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
 
             return "views/auth/login";
         }
-
-        if (user.getIsActive() == null || !user.getIsActive()) {
-            model.addAttribute("errorMessage", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Admin!");
-            return "views/auth/login";
-        }
-
-        session.setAttribute("currentUser", user);
-        return getRedirectUrlForUser(user);
     }
 
     @GetMapping("/logout")
     public String logoutProcess(HttpSession session) {
         session.invalidate();
+
         return "redirect:/login?logout";
     }
 
