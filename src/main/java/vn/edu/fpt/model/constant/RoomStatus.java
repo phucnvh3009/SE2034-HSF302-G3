@@ -1,7 +1,7 @@
 package vn.edu.fpt.model.constant;
 
 public enum RoomStatus {
-    AVAILABLE,
+    ACTIVE,
     FULL,
     MAINTENANCE,
     AVAILABLE

@@ -35,8 +35,12 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<StaffListResponse> getStaffsByManagerId(Long managerId) {
-        List<User> staffUsers = userRepository.findStaffByManagerId(managerId);
-        
+        User manager = userRepository.findById(managerId).orElse(null);
+        if (manager == null || manager.getBuilding() == null) {
+            return Collections.emptyList();
+        }
+        List<User> staffUsers = userRepository.searchStaffsByBuildingIdAndKeywordAndStatus(
+                manager.getBuilding().getId(), RoleName.ROLE_STAFF, null, true);
         return staffUsers.stream().map(user -> StaffListResponse.builder()
                 .id(user.getId())
                 .fullName(user.getLastName() + " " + (user.getMiddleName() != null ? user.getMiddleName() + " " : "") + user.getFirstName())
@@ -74,7 +78,8 @@ public class StaffServiceImpl implements StaffService {
                 .orElseThrow(() -> new RuntimeException("Floor not found"));
         
         // Verify that the floor belongs to the manager's building
-        if (!floor.getBuilding().getManager().getId().equals(managerId)) {
+        User manager = userRepository.findById(managerId).orElse(null);
+        if (manager == null || manager.getBuilding() == null || !floor.getBuilding().getId().equals(manager.getBuilding().getId())) {
             throw new RuntimeException("Unauthorized: Floor does not belong to your building");
         }
 

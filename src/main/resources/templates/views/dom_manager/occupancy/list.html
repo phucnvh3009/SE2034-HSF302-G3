@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
-        <div th:replace="~{dom_manager/layout :: layout('Tình trạng phòng (Occupancy)', ~{::content})}">
+        <div th:replace="~{views/dom_manager/layout :: layout('Tình trạng phòng (Occupancy)', ~{::content})}">
             <div th:fragment="content">
                 <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>

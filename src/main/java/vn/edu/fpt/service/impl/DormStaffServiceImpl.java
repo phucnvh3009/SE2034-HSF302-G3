@@ -25,11 +25,11 @@ public class DormStaffServiceImpl implements DormStaffService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<StaffDTO> getAllStaffs(String keyword, Boolean status) {
+    public List<StaffDTO> getAllStaffsByBuildingId(Long buildingId, String keyword, Boolean status) {
         if (keyword != null && keyword.trim().isEmpty()) {
             keyword = null;
         }
-        List<User> staffs = userRepository.searchUsersByRoleAndKeywordAndStatus(RoleName.ROLE_STAFF, keyword, status);
+        List<User> staffs = userRepository.searchStaffsByBuildingIdAndKeywordAndStatus(buildingId, RoleName.ROLE_STAFF, keyword, status);
         return staffs.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
@@ -43,9 +43,16 @@ public class DormStaffServiceImpl implements DormStaffService {
 
     @Override
     @Transactional
-    public StaffDTO createStaff(StaffRequest request) {
+    public StaffDTO createStaff(Long managerId, StaffRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email đã tồn tại");
+        }
+
+        User manager = userRepository.findById(managerId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thông tin quản lý"));
+
+        if (manager.getBuilding() == null) {
+            throw new IllegalArgumentException("Quản lý chưa được phân công tòa nhà nào");
         }
 
         User user = new User();
@@ -58,6 +65,7 @@ public class DormStaffServiceImpl implements DormStaffService {
         user.setGender(request.getGender());
         user.setDob(request.getDob());
         user.setIsActive(true);
+        user.setBuilding(manager.getBuilding());
 
         Role roleStaff = roleRepository.findByRoleName(RoleName.ROLE_STAFF)
                 .orElseGet(() -> {

@@ -8,8 +8,10 @@ import vn.edu.fpt.model.Bed;
 import vn.edu.fpt.model.DormitoryBuilding;
 import vn.edu.fpt.model.Floor;
 import vn.edu.fpt.model.Room;
+import vn.edu.fpt.model.User;
 import vn.edu.fpt.model.constant.BedStatus;
 import vn.edu.fpt.repository.DormitoryBuildingRepository;
+import vn.edu.fpt.repository.UserRepository;
 import vn.edu.fpt.service.OccupancyService;
 
 import java.util.ArrayList;
@@ -20,12 +22,17 @@ import java.util.List;
 public class OccupancyServiceImpl implements OccupancyService {
 
     private final DormitoryBuildingRepository buildingRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
     public OccupancyDTO getOccupancyByManagerId(Long managerId) {
-        DormitoryBuilding building = buildingRepository.findByManagerId(managerId)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy tòa nhà do quản lý này phụ trách."));
+        User manager = userRepository.findById(managerId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy quản lý."));
+        DormitoryBuilding building = manager.getBuilding();
+        if (building == null) {
+            throw new IllegalArgumentException("Không tìm thấy tòa nhà do quản lý này phụ trách.");
+        }
 
         OccupancyDTO dto = new OccupancyDTO();
         dto.setBuildingId(building.getId());

@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
 import vn.edu.fpt.dto.request.StaffRequest;
 import vn.edu.fpt.dto.response.StaffDTO;
+import vn.edu.fpt.model.User;
 import vn.edu.fpt.service.DormStaffService;
 import jakarta.validation.Valid;
 
@@ -22,13 +24,17 @@ public class ManagerStaffController {
     @GetMapping
     public String showStaffList(@RequestParam(required = false) String keyword,
                                 @RequestParam(required = false) Boolean status,
+                                HttpSession session,
                                 Model model) {
-        List<StaffDTO> staffs = dormStaffService.getAllStaffs(keyword, status);
+        User currentUser = (User) session.getAttribute("currentUser");
+        Long buildingId = (currentUser != null && currentUser.getBuilding() != null) ? currentUser.getBuilding().getId() : null;
+        
+        List<StaffDTO> staffs = dormStaffService.getAllStaffsByBuildingId(buildingId, keyword, status);
         model.addAttribute("staffs", staffs);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
 
-        return "dom_manager/staff_account/list";
+        return "views/dom_manager/staff_account/list";
     }
 
     @GetMapping("/{id}")
@@ -36,7 +42,7 @@ public class ManagerStaffController {
         try {
             StaffDTO staff = dormStaffService.getStaffById(id);
             model.addAttribute("staff", staff);
-            return "dom_manager/staff_account/view";
+            return "views/dom_manager/staff_account/view";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "redirect:/dom_manager/staff_account";
@@ -46,22 +52,26 @@ public class ManagerStaffController {
     @GetMapping("/add")
     public String showAddStaffForm(Model model) {
         model.addAttribute("staffRequest", new StaffRequest());
-        return "dom_manager/staff_account/add";
+        return "views/dom_manager/staff_account/add";
     }
 
     @PostMapping("/add")
     public String addStaff(@Valid @ModelAttribute("staffRequest") StaffRequest staffRequest,
-                           BindingResult bindingResult, Model model) {
+                           BindingResult bindingResult, HttpSession session, Model model) {
         if (bindingResult.hasErrors()) {
-            return "dom_manager/staff_account/add";
+            return "views/dom_manager/staff_account/add";
         }
         try {
-            dormStaffService.createStaff(staffRequest);
+            User currentUser = (User) session.getAttribute("currentUser");
+            if (currentUser == null) {
+                return "redirect:/login";
+            }
+            dormStaffService.createStaff(currentUser.getId(), staffRequest);
             model.addAttribute("successMessage", "Thêm nhân viên thành công");
             return "redirect:/dom_manager/staff_account";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "dom_manager/staff_account/add";
+            return "views/dom_manager/staff_account/add";
         }
     }
 

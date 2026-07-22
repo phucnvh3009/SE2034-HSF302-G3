@@ -20,11 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByUserRoles_Role_RoleName(RoleName roleName);
 
-    @Query("SELECT DISTINCT sfa.staff FROM StaffFloorAssignment sfa WHERE sfa.floor.building.manager.id = :managerId AND sfa.staff.isActive = true")
-    List<User> findStaffByManagerId(@Param("managerId") Long managerId);
-
-    @Query("SELECT u FROM User u JOIN u.userRoles ur JOIN ur.role r WHERE r.roleName = :roleName AND (:keyword IS NULL OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND (:status IS NULL OR u.isActive = :status)")
-    List<User> searchUsersByRoleAndKeywordAndStatus(@Param("roleName") RoleName roleName, @Param("keyword") String keyword, @Param("status") Boolean status);
+    @Query("SELECT u FROM User u JOIN u.userRoles ur JOIN ur.role r WHERE r.roleName = :roleName AND u.building.id = :buildingId AND (:keyword IS NULL OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND (:status IS NULL OR u.isActive = :status)")
+    List<User> searchStaffsByBuildingIdAndKeywordAndStatus(@Param("buildingId") Long buildingId, @Param("roleName") RoleName roleName, @Param("keyword") String keyword, @Param("status") Boolean status);
 
     @Query("SELECT u FROM User u JOIN u.userRoles ur JOIN ur.role r " +
             "WHERE r.roleName = :roleName " +

@@ -30,6 +30,6 @@ public class ManagerOccupancyController {
             model.addAttribute("errorMessage", e.getMessage());
         }
 
-        return "dom_manager/occupancy/list";
+        return "views/dom_manager/occupancy/list";
     }
 }
