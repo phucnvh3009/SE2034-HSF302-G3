@@ -52,7 +52,7 @@ public class UtilityUsageController {
             return "redirect:/login";
         }
         try {
-            utilityUsageService.createUtilityUsage(reqDTO);
+            utilityUsageService.createUtilityUsage(reqDTO,currentStaff);
             redirectAttributes.addFlashAttribute("successMessage", "Ghi nhận chỉ số điện nước thành công!");
             return "redirect:/domstaff/utility-usage";
         } catch (IllegalArgumentException e) {
