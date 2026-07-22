@@ -8,6 +8,6 @@ import java.util.List;
 
 @Service
 public interface UtilityUsageService {
-    List<UtilityUsageListDTO> getAllUtilityUsages();
+    List<UtilityUsageListDTO> getAllUtilityUsages(Long buildingId);
     void createUtilityUsage(UtilityUsageCreateReqDTO reqDTO);
 }

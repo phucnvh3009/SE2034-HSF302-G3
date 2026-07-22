@@ -36,9 +36,9 @@ public class IssueReportServiceImpl implements IssueReportService {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(java.time.ZoneId.systemDefault());
     @Override
-    public List<ReportDTO> getAllIssueReports() {
+    public List<ReportDTO> getAllIssueReports(Long BuildingId) {
         List<ReportDTO> reportDTOList = new ArrayList<>();
-        List<IssueReport> issueReports = issueReportRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<IssueReport> issueReports = issueReportRepository.findByBuildingId(BuildingId);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
                 .withZone(java.time.ZoneId.systemDefault());
 

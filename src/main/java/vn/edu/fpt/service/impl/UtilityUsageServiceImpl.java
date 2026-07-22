@@ -5,12 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.fpt.dto.request.domstaff.UtilityUsageCreateReqDTO;
 import vn.edu.fpt.dto.response.domstaff.UtilityUsageListDTO;
-import vn.edu.fpt.model.Room;
-import vn.edu.fpt.model.Semester;
-import vn.edu.fpt.model.UtilityUsage;
+import vn.edu.fpt.model.*;
 import vn.edu.fpt.repository.RoomRepository;
 import vn.edu.fpt.repository.SemesterRepository;
 import vn.edu.fpt.repository.UtilityUsageRepository;
+import vn.edu.fpt.service.NotificationService;
 import vn.edu.fpt.service.UtilityUsageService;
 
 import java.time.LocalDateTime;
@@ -25,10 +24,10 @@ public class UtilityUsageServiceImpl implements UtilityUsageService {
     private final UtilityUsageRepository utilityUsageRepository;
     private final RoomRepository roomRepository;
     private final SemesterRepository semesterRepository;
-
+    private final NotificationService notificationService;
     @Override
-    public List<UtilityUsageListDTO> getAllUtilityUsages() {
-        return utilityUsageRepository.findAllWithRoom().stream().map(u -> new UtilityUsageListDTO(
+    public List<UtilityUsageListDTO> getAllUtilityUsages(Long buildingId) {
+        return utilityUsageRepository.findAllWithRoom(buildingId).stream().map(u -> new UtilityUsageListDTO(
                 u.getId(),
                 u.getRoom().getRoomNumber(),
                 "Tháng " + String.format("%02d", u.getRecordedMonth()) + "/" + u.getRecordedYear(),
@@ -42,6 +41,7 @@ public class UtilityUsageServiceImpl implements UtilityUsageService {
     }
 
     @Override
+    @Transactional
     public void createUtilityUsage(UtilityUsageCreateReqDTO reqDTO) {
         Room room = roomRepository.findById(reqDTO.getRoomId())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng"));
@@ -85,7 +85,6 @@ public class UtilityUsageServiceImpl implements UtilityUsageService {
         usageToSave.setStartWater(startWat);
         usageToSave.setEndWater(reqDTO.getEndWater());
         usageToSave.setRecordedAt(LocalDateTime.now());
-
         utilityUsageRepository.save(usageToSave);
     }
 }
