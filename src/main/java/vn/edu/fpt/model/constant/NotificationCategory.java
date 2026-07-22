@@ -5,4 +5,5 @@ public enum NotificationCategory {
     BILLING,
     MAINTENANCE,
     DISCIPLINE,
+    USAGE
 }
