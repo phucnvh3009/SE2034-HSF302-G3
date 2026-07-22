@@ -66,6 +66,10 @@ public class User extends BaseAuditEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private StudentProfile studentProfile;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
+    private DormitoryBuilding building;
+
     public String getFullName() {
         StringBuilder sb = new StringBuilder();
         if (lastName != null) sb.append(lastName);
