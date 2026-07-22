@@ -36,9 +36,11 @@ public class AdminManagerController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
+
         if (!model.containsAttribute("newManager")) {
             model.addAttribute("newManager", new ManagerRequest());
         }
+
         return "views/admin/addManager";
     }
 
@@ -49,15 +51,18 @@ public class AdminManagerController {
                                 RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "Thông tin nhập vào không hợp lệ. Vui lòng kiểm tra lại!");
+
             return "views/admin/addManager";
         }
 
         try {
             dormManagementService.createManager(request);
             redirectAttributes.addFlashAttribute("successMessage", "Thêm mới quản lý thành công!");
+
             return "redirect:/admin/listManager";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
+
             return "views/admin/addManager";
         }
     }
@@ -67,9 +72,11 @@ public class AdminManagerController {
         try {
             ManagerDTO manager = dormManagementService.getManagerById(id);
             model.addAttribute("manager", manager);
+
             return "views/admin/viewManager";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
+
             return "redirect:/admin/listManager";
         }
     }
@@ -80,6 +87,7 @@ public class AdminManagerController {
                                       RedirectAttributes redirectAttributes) {
         try {
             dormManagementService.toggleManagerStatus(id);
+
             redirectAttributes.addFlashAttribute("successMessage", "Cập nhật trạng thái tài khoản thành công!");
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
@@ -88,6 +96,7 @@ public class AdminManagerController {
         if (redirectDetail) {
             return "redirect:/admin/listManager/" + id;
         }
+
         return "redirect:/admin/listManager";
     }
 }

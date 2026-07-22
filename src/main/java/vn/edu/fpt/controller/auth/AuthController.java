@@ -58,6 +58,7 @@ public class AuthController {
 
         if (!user.getPasswordHash().equals(request.getPassword())) {
             model.addAttribute("errorMessage", "Mật khẩu không chính xác!");
+
             return "views/auth/login";
         }
 

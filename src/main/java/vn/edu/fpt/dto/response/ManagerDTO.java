@@ -17,5 +17,6 @@ public class ManagerDTO {
     private String avatar;
     private Boolean isActive;
     private Instant createdAt;
+    private String buildingName;
 
 }

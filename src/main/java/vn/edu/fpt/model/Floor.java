@@ -25,16 +25,14 @@ public class Floor extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id", nullable = false)
-    private DormitoryBuilding building; // Thuộc tòa nhà nào
-
+    private DormitoryBuilding building;
     @Column(name = "floor_number", nullable = false)
-    private Integer floorNumber; // Tầng số mấy (ví dụ: 1, 2, 3)
+    private Integer floorNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
-    private CommonStatus status; // ACTIVE, INACTIVE
+    private CommonStatus status;
 
-    // Một tầng có nhiều phòng
     @OneToMany(mappedBy = "floor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Room> rooms = new HashSet<>();
 }

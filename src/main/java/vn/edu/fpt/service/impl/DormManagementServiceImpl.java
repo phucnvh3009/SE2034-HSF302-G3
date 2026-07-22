@@ -41,7 +41,7 @@ public class DormManagementServiceImpl implements DormManagementService {
     }
 
     @Override
-    public ManagerDTO createManager(ManagerRequest request) {
+    public void createManager(ManagerRequest request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email này đã tồn tại trong hệ thống!");
@@ -67,8 +67,7 @@ public class DormManagementServiceImpl implements DormManagementService {
         userRole.setRole(managerRole);
         user.getUserRoles().add(userRole);
 
-        User savedUser = userRepository.save(user);
-        return mapToResponse(savedUser);
+        userRepository.save(user);
     }
 
     @Override
@@ -96,7 +95,6 @@ public class DormManagementServiceImpl implements DormManagementService {
         response.setId(user.getId());
         response.setEmail(user.getEmail());
 
-        // Ghép họ tên đầy đủ
         String fullName = user.getLastName();
         if (user.getMiddleName() != null && !user.getMiddleName().trim().isEmpty()) {
             fullName += " " + user.getMiddleName();
@@ -110,6 +108,7 @@ public class DormManagementServiceImpl implements DormManagementService {
         response.setAvatar(user.getAvatar());
         response.setIsActive(user.getIsActive());
         response.setCreatedAt(user.getCreatedAt());
+        response.setBuildingName(user.getBuilding() != null ? user.getBuilding().getName() : null);
 
         return response;
     }

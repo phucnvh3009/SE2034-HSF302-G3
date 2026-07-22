@@ -1,10 +1,9 @@
 <header xmlns:th="http://www.thymeleaf.org" th:fragment="header" class="main-header">
     <div class="header-logo">
-        <h2>SDMS | Ký Túc Xá</h2>
+        <h2>SDMS | Quản Lý Ký Túc Xá</h2>
     </div>
     <div class="header-user">
-        <span class="user-role">ADMINISTRATOR</span>
-        <span class="user-name" th:text="${session.currentUser != null ? 'Xin chào, ' + session.currentUser.firstName + '!' : 'Xin chào, Admin!'}">Xin chào, Admin!</span>
+        <span class="user-name" th:text="${session.currentUser != null ? 'Xin chào, ' + session.currentUser.firstName : 'Xin chào, Admin!'}">Xin chào, Admin!</span>
         <a th:href="@{/logout}" class="btn-logout">Đăng xuất</a>
     </div>
 </header>

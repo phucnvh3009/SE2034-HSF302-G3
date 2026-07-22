@@ -23,31 +23,31 @@ public class Contract extends BaseAuditEntity {
     private Long id;
 
     @Column(name = "contract_code", length = 50, unique = true, nullable = false)
-    private String contractCode; // Mã hợp đồng tự sinh (ví dụ: HD-2026-0001)
+    private String contractCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
-    private User student; // Sinh viên thuê phòng (Role: ROLE_STUDENT)
+    private User student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bed_id", nullable = false)
-    private Bed bed; // Giường cụ thể được thuê
+    private Bed bed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "semester_id", nullable = false)
-    private Semester semester; // Thuộc kỳ học nào
+    private Semester semester;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price; // Giá thuê chốt thực tế (copy từ RoomType)
+    private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 30, nullable = false)
-    private ContractStatus status; // PENDING_APPROVAL, ACTIVE, CHECKED_OUT, CANCELED
+    private ContractStatus status;
 
     @Column(name = "checked_out_at")
-    private LocalDateTime checkedOutAt; // Thời điểm thực tế sinh viên checkout dọn ra ngoài
+    private LocalDateTime checkedOutAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checked_out_by")
-    private User checkedOutBy; // Manager thực hiện thủ tục checkout
+    private User checkedOutBy;
 }
