@@ -45,11 +45,10 @@ public class StudentProfile extends BaseAuditEntity {
             regexp = "^[0-9]{10,11}$",
             message = "Số điện thoại phụ huynh phải chứa từ 10 đến 11 chữ số"
     )
-    private String parentPhone; // Số điện thoại phụ huynh để liên hệ khẩn cấp
+    private String parentPhone;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "student_status", length = 20
-//            , nullable = false
-    )
-    private StudentStatus studentStatus = StudentStatus.ACTIVE; // Trạng thái mặc định là ACTIVE khi kích hoạt thành công
+    @Column(name = "student_status", length = 20, nullable = false)
+    private StudentStatus studentStatus = StudentStatus.ACTIVE;
+
 }
