@@ -7,10 +7,8 @@ import vn.edu.fpt.model.User;
 import vn.edu.fpt.model.constant.RoleName;
 import vn.edu.fpt.repository.UserRepository;
 import vn.edu.fpt.service.StaffService;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import vn.edu.fpt.dto.request.StaffCreateRequest;
 import vn.edu.fpt.model.Floor;
 import vn.edu.fpt.model.Role;
@@ -20,7 +18,6 @@ import vn.edu.fpt.model.constant.CommonStatus;
 import vn.edu.fpt.repository.FloorRepository;
 import vn.edu.fpt.repository.RoleRepository;
 import vn.edu.fpt.repository.StaffFloorAssignmentRepository;
-
 import java.time.LocalDate;
 import java.util.Collections;
 
