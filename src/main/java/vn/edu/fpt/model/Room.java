@@ -25,26 +25,25 @@ public class Room extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "floor_id", nullable = false)
-    private Floor floor; // Thuộc tầng nào
+    private Floor floor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_type_id", nullable = false)
-    private RoomType roomType; // Thuộc loại phòng nào (để lấy giá tiền và tiện ích)
+    private RoomType roomType;
 
     @Column(name = "room_number", length = 10, nullable = false)
-    private String roomNumber; // Số phòng (ví dụ: "101", "201")
+    private String roomNumber;
 
     @Column(name = "max_beds", nullable = false)
-    private Integer maxBeds; // Số giường tối đa (ví dụ: 4 hoặc 8)
+    private Integer maxBeds;
 
     @Column(name = "current_occupancy", nullable = false)
     private Integer currentOccupancy = 0;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
-    private RoomStatus status; // ACTIVE, FULL, MAINTENANCE
+    private RoomStatus status;
 
-    // Một phòng có nhiều giường
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Bed> beds = new HashSet<>();
 }

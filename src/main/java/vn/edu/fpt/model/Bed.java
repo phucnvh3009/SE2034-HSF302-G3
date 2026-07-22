@@ -22,12 +22,12 @@ public class Bed extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
-    private Room room; // Thuộc phòng nào
+    private Room room;
 
     @Column(name = "bed_number", nullable = false)
-    private Integer bedNumber; // Số thứ tự giường trong phòng (ví dụ: 1, 2, 3...)
+    private Integer bedNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20, nullable = false)
-    private BedStatus status; // AVAILABLE, OCCUPIED, MAINTENANCE
+    private BedStatus status;
 }

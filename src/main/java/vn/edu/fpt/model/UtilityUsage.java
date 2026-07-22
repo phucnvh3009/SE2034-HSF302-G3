@@ -23,34 +23,34 @@ public class UtilityUsage extends BaseAuditEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
-    private Room room; // Phòng được ghi điện nước
+    private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "semester_id", nullable = false)
-    private Semester semester; // Ghi cho học kỳ nào
+    private Semester semester;
 
     @Column(name = "recorded_month", nullable = false)
-    private Integer recordedMonth; // Tháng ghi nhận (1 - 12)
+    private Integer recordedMonth;
 
     @Column(name = "recorded_year", nullable = false)
-    private Integer recordedYear; // Năm ghi nhận (ví dụ: 2026)
+    private Integer recordedYear;
 
     @Column(name = "start_electricity", nullable = false)
-    private Integer startElectricity; // Số điện đầu tháng
+    private Integer startElectricity;
 
     @Column(name = "end_electricity", nullable = false)
-    private Integer endElectricity; // Số điện cuối tháng (để tính số tiêu thụ)
+    private Integer endElectricity;
 
     @Column(name = "start_water", nullable = false)
-    private Integer startWater; // Số nước đầu tháng
+    private Integer startWater;
 
     @Column(name = "end_water", nullable = false)
-    private Integer endWater; // Số nước cuối tháng
+    private Integer endWater;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recorded_by")
-    private User recordedBy; // Nhân viên ghi số
+    private User recordedBy; 
 
     @Column(name = "recorded_at")
-    private LocalDateTime recordedAt; // Thời điểm ghi
+    private LocalDateTime recordedAt;
 }
