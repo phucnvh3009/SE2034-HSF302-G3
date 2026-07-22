@@ -34,9 +34,8 @@ public class DormitoryBuilding extends BaseAuditEntity {
     @Column(name = "status", length = 20, nullable = false)
     private CommonStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_id")
-    private User manager;
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private Set<User> staffAndManagers = new HashSet<>();
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Floor> floors = new HashSet<>();
