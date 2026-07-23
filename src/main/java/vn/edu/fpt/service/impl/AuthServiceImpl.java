@@ -18,14 +18,14 @@ public class AuthServiceImpl implements AuthService {
     @Transactional(readOnly = true)
     public User authenticate(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Email đăng nhập không tồn tại!"));
+                .orElseThrow(() -> new IllegalArgumentException("Email đăng nhập không tồn tại"));
 
         if (!user.getPasswordHash().equals(request.getPassword())) {
-            throw new IllegalArgumentException("Mật khẩu không chính xác!");
+            throw new IllegalArgumentException("Mật khẩu không chính xác");
         }
 
         if (user.getIsActive() == null || !user.getIsActive()) {
-            throw new IllegalArgumentException("Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Admin!");
+            throw new IllegalArgumentException("Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Admin");
         }
 
         return user;

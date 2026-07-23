@@ -4,7 +4,6 @@
 <div th:replace="~{views/admin/layout :: layout('Quản lý Ban quản lý KTX', 'listManager.css', ~{::content})}">
     <div th:fragment="content">
 
-        <!--Thanh Tìm kiếm và Lọc trạng thái -->
         <div class="card" style="margin-bottom: 20px; padding: 15px 20px;">
 
             <form th:action="@{/admin/listManager}" method="get" style="display: flex; gap: 15px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
@@ -30,7 +29,6 @@
             </form>
         </div>
 
-        <!--Bảng Danh sách Dorm Managers -->
         <div class="card">
             <div class="card-title">Danh sách Quản lý tòa nhà</div>
             <div class="table-container">

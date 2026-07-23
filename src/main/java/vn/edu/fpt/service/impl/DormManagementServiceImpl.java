@@ -3,12 +3,14 @@ package vn.edu.fpt.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.edu.fpt.model.DormitoryBuilding;
 import vn.edu.fpt.model.Role;
 import vn.edu.fpt.model.User;
 import vn.edu.fpt.model.UserRole;
 import vn.edu.fpt.model.constant.RoleName;
 import vn.edu.fpt.dto.request.ManagerRequest;
 import vn.edu.fpt.dto.response.ManagerDTO;
+import vn.edu.fpt.repository.DormitoryBuildingRepository;
 import vn.edu.fpt.repository.RoleRepository;
 import vn.edu.fpt.repository.UserRepository;
 import vn.edu.fpt.service.DormManagementService;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
 public class DormManagementServiceImpl implements DormManagementService {
 
     private final UserRepository userRepository;
-
+    private final DormitoryBuildingRepository dormitoryBuildingRepository;
     private final RoleRepository roleRepository;
 
     @Override
@@ -56,9 +58,14 @@ public class DormManagementServiceImpl implements DormManagementService {
         user.setPhone(request.getPhone());
         user.setGender(request.getGender());
         user.setDob(request.getDob());
+
+        if (request.getBuildingId() != null) {
+            DormitoryBuilding building = dormitoryBuildingRepository.findById(request.getBuildingId())
+                    .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy tòa nhà với ID= " + request.getBuildingId()));
+            user.setBuilding(building);
+        }
         user.setIsActive(true);
 
-        // Tìm và gán Role MANAGER
         Role managerRole = roleRepository.findByRoleName(RoleName.ROLE_MANAGER)
                 .orElseThrow(() -> new IllegalStateException("Không tìm thấy vai trò ROLE_MANAGER trong hệ thống!"));
 

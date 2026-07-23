@@ -8,8 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.fpt.dto.request.ManagerRequest;
+import vn.edu.fpt.dto.response.BuildingDTO;
 import vn.edu.fpt.dto.response.ManagerDTO;
 import vn.edu.fpt.service.DormManagementService;
+import vn.edu.fpt.service.DormitoryBuildingService;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class AdminManagerController {
 
     private final DormManagementService dormManagementService;
+    private final DormitoryBuildingService dormitoryBuildingService;
 
     @GetMapping
     public String showManagersList(
@@ -40,6 +43,9 @@ public class AdminManagerController {
         if (!model.containsAttribute("newManager")) {
             model.addAttribute("newManager", new ManagerRequest());
         }
+
+        List<BuildingDTO> buildings = dormitoryBuildingService.getActiveBuildings();
+        model.addAttribute("buildings", buildings);
 
         return "views/admin/addManager";
     }
