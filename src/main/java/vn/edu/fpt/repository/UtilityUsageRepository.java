@@ -12,7 +12,8 @@ import java.util.Optional;
 @Repository
 public interface UtilityUsageRepository extends JpaRepository<UtilityUsage, Long> {
     
-    @Query("SELECT u FROM UtilityUsage u WHERE u.room.floor.building.id = :buildingId")
+    @Query("SELECT u FROM UtilityUsage u WHERE u.room.floor.building.id = :buildingId " +
+           "ORDER BY u.room.roomNumber ASC, u.recordedYear DESC, u.recordedMonth DESC")
     List<UtilityUsage> findAllWithRoom(@Param("buildingId") Long buildingId);
 
     Optional<UtilityUsage> findTopByRoomIdOrderByRecordedYearDescRecordedMonthDesc(Long roomId);
