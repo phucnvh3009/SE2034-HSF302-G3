@@ -7,13 +7,18 @@ import vn.edu.fpt.dto.response.domstaff.Notification4StaffDto;
 import vn.edu.fpt.model.DormitoryBuilding;
 import vn.edu.fpt.model.Notification;
 import vn.edu.fpt.model.User;
+import vn.edu.fpt.model.Contract;
+import vn.edu.fpt.model.constant.ContractStatus;
+import vn.edu.fpt.repository.ContractRepository;
 import vn.edu.fpt.repository.DormitoryBuildingRepository;
 import vn.edu.fpt.repository.NotificationRepository;
 import vn.edu.fpt.repository.UserRepository;
 import vn.edu.fpt.service.NotificationService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -25,15 +30,27 @@ public class NotificationServiceImpl implements NotificationService {
     private DormitoryBuildingRepository dormitoryBuildingRepository;
     private UserRepository userRepository;
     private NotificationRepository notificationRepository;
+    private ContractRepository contractRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<NotificationDTO> getNotificationsForUser(User user) {
-        Long buildingId = user.getBuilding() != null ? user.getBuilding().getId() : -1L;
+        Long buildingId = -1L;
+        if (user.getBuilding() != null) {
+            buildingId = user.getBuilding().getId();
+        } else {
+            Optional<Contract> activeContractOpt = contractRepository.findFirstByStudentIdAndStatus(user.getId(), ContractStatus.ACTIVE);
+            if (activeContractOpt.isPresent() && activeContractOpt.get().getBed() != null && activeContractOpt.get().getBed().getRoom() != null && activeContractOpt.get().getBed().getRoom().getFloor() != null && activeContractOpt.get().getBed().getRoom().getFloor().getBuilding() != null) {
+                buildingId = activeContractOpt.get().getBed().getRoom().getFloor().getBuilding().getId();
+            }
+        }
+        
         List<Notification> notifications = notificationRepository.findNotificationsForUser(buildingId, user.getId());
         return notifications.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<NotificationDTO> getNotificationsByTypeAndUser(String type, User user) {
         if (type == null || type.isBlank()) {
             return getNotificationsForUser(user);
@@ -63,6 +80,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long countUnread(User user) {
         // Tạm thời đếm tổng số thông báo vì chưa có bảng trạng thái read
         return getNotificationsForUser(user).size();

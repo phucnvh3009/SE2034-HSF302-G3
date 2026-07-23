@@ -19,9 +19,7 @@ public class IssueReportController {
 
     private final IssueReportService reportService;
 
-    /**
-     * GET /student/reports -> Hiển thị danh sách báo cáo sự cố
-     */
+
     @GetMapping
     public String listReports(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
