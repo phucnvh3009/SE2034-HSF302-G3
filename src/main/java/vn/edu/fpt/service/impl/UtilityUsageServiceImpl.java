@@ -94,7 +94,7 @@ public class UtilityUsageServiceImpl implements UtilityUsageService {
         for (Contract contract : contracts) {
             Notification notification = new Notification();
             notification.setTitle("Cập nhật chỉ số điện nước");
-            notification.setCategory(NotificationCategory.USAGE);
+            notification.setCategory(NotificationCategory.BILLING);
             notification.setSender(sender);
             notification.setTargetType(NotificationTarget.STUDENT);
             notification.setTargetBuilding(dom);

@@ -1,9 +1,11 @@
 package vn.edu.fpt.controller.domstaff;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.fpt.dto.request.domstaff.UtilityUsageCreateReqDTO;
@@ -45,8 +47,8 @@ public class UtilityUsageController {
     }
 
     @PostMapping("/create")
-    public String submitCreateForm(@jakarta.validation.Valid @ModelAttribute("reqDTO") UtilityUsageCreateReqDTO reqDTO, 
-                                   org.springframework.validation.BindingResult bindingResult,
+    public String submitCreateForm(@Valid @ModelAttribute("reqDTO") UtilityUsageCreateReqDTO reqDTO,
+                                   BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes, HttpSession session, Model model) {
         User currentStaff = (User) session.getAttribute("currentUser");
         if (currentStaff == null) {

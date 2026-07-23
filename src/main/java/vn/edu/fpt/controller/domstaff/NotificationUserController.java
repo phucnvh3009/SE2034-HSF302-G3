@@ -1,9 +1,11 @@
 package vn.edu.fpt.controller.domstaff;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.fpt.dto.response.domstaff.Notification4StaffDto;
@@ -31,8 +33,8 @@ public class NotificationUserController {
 
     @PostMapping("/notifications/create")
     public String createNotification(
-            @jakarta.validation.Valid @ModelAttribute("notificationDTO") Notification4StaffDto notificationDTO,
-            org.springframework.validation.BindingResult bindingResult,
+            @Valid @ModelAttribute("notificationDTO") Notification4StaffDto notificationDTO,
+            BindingResult bindingResult,
             HttpSession session,
             RedirectAttributes redirectAttributes,
             Model model) {
@@ -41,6 +43,7 @@ public class NotificationUserController {
             return "redirect:/login";
         }
         if (bindingResult.hasErrors()) {
+            model.addAttribute("notificationDTO", notificationDTO);
             return "views/domstaff/notification/NotificationCreate";
         }
         try {
